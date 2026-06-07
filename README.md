@@ -1,4 +1,4 @@
-# Kodi plugin program Maintenance Toolbox
+# Maintenance Toolbox for Kodi
 
 ![icon](https://github.com/Code-E-Magpie/plugin.program.maintenance-toolbox/blob/main/resources/media/icon.png)
 
