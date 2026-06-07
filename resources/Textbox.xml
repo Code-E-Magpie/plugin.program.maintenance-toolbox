@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <coordinates>
+        <top>0</top>
+        <left>0</left>
+    </coordinates>
+    <controls>
+
+        <!-- Background Image -->
+        <control type="group" id="8100">
+            <control type="image">
+                <description>Background Image</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1920</width>
+                <height>1080</height>
+                <texture border="2">background.png</texture>
+            </control>
+
+            <!-- Inactive Background Button (avoids accidental closing) -->
+            <control type="button" id="8181">
+                <description>Inactive Background Button</description>
+                <top>0</top>
+                <bottom>0</bottom>
+                <left>0</left>
+                <right>0</right>
+                <onclick>noop</onclick>
+                <texturefocus/>
+                <texturenofocus/>
+            </control>
+
+            <!-- Header -->
+            <control type="label" id="8200">
+                <description>Header</description>
+                <top>0</top>
+                <width>1920</width>
+                <height>80</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>font13</font>
+                <label></label>
+            </control>
+
+            <!-- Content Panel -->
+            <control type="textbox" id="8300">
+                <description>Content Panel</description>
+                <top>90</top>
+                <left>25</left>
+                <width>1850</width>
+                <height>970</height>
+                <align>left</align>
+                <aligny>top</aligny>
+                <font>font12</font>
+                <pagecontrol>8400</pagecontrol>
+                <onup>8400</onup>
+                <ondown>8400</ondown>
+                <onleft>8400</onleft>
+                <onright>8400</onright>
+            </control>
+
+            <!-- Scrollbar Image -->
+            <control type="scrollbar" id="8400">
+            <description>Scrollbar Image</description>
+                <top>90</top>
+                <right>15</right>
+                <width>30</width>
+                <height>970</height>
+                <orientation>vertical</orientation>
+                <showonepage>true</showonepage>
+                <subtype>text</subtype>
+                <texturesliderbackground>scrollbar-V-background.png</texturesliderbackground>
+                <texturesliderbar>scrollbar-V.png</texturesliderbar>
+                <texturesliderbarfocus colordiffuse="FFFFFF00">scrollbar-V-focus.png</texturesliderbarfocus>
+                <visible>true</visible>
+                <onup>8500</onup>
+                <ondown>8500</ondown>
+                <onleft>8500</onleft>
+                <onright>8500</onright>
+            </control>
+
+            <!-- Buttons -->
+            <control type="button" id="8500">
+            <description>Button - Close</description>
+                <top>15</top>
+                <right>15</right>
+                <width>200</width>
+                <height>50</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <font>font12</font>
+                <label>Close</label>
+                <textcolor>FFC0C0C0</textcolor>
+                <textoffsetx>20</textoffsetx>
+                <texturefocus colordiffuse="FFFFFF00">frame_grey.png</texturefocus>
+                <texturenofocus>frame_black.png</texturenofocus>
+                <onup>8400</onup>
+                <ondown>8400</ondown>
+                <onleft>8400</onleft>
+                <onright>8400</onright>
+            </control>
+        </control>
+    </controls>
+</window>
