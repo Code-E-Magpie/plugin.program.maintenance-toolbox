@@ -18,7 +18,7 @@ Open the add-on to access tab0.
 
 • Other user information •<br/>Information (from header button scroll left to the Developer button or right to the Version button).<br/>Dialogue boxes provide user information when some of the function buttons are selected.
 
-Operating System / Network State / Internet State may display "Busy".<br/>Press the selected tab button to refresh.
+Operating System / Network State / Internet State may display 'Busy'.<br/>Press the selected tab button to refresh.
 
 
 # Tab screenshots
