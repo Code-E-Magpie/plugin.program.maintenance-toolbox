@@ -42,7 +42,7 @@ tab4: Backup + Delete
 ![icon](https://github.com/Code-E-Magpie/plugin.program.maintenance-toolbox/blob/main/.screenshots/tab4.png)
 
 
-# Development
+# Development environment
 Kodi v21.3 Omega apk (Android app) with Confluence skin as default (including default font).
 
 Tablet (1340 x 800 aspect ratio 5:3) running Android 14 using QuickEdit apk (TryItAndSee / LearnAsYouGo iterative development and testing).
