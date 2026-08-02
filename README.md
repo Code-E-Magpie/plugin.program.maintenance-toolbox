@@ -2,7 +2,7 @@
 
 ![icon](https://github.com/Code-E-Magpie/plugin.program.maintenance-toolbox/blob/main/resources/media/icon.png)
 
-Data driven robust design based on Logical Data Model methodology.<br/>Centralised common functions and configuration.<br/>Discrete files for user interface tab content and process functions to simplify maintenance and improve longevity.<br/>Reduced functionality releases are possible if new releases of Kodi / Python cause issues.<br/>Minimal size <1MB. No surplus images or files. No bloatware.<br/>Simple and easy to use on installation with dialogue boxes, notifications and user information.<br/>Extensive customisation in settings enables extra functionality including trillions of text colour combinations.
+Simple and easy to use on installation with dialogue boxes, notifications and user information.<br/>Extensive customisation in settings enables extra functionality including trillions of text colour combinations.<br/>\'Settings + Footer Menu\' button provides access to further functionality.<br/><br/>Data driven robust design based on Logical Data Model methodology.<br/>Centralised common functions and configuration.<br/>Discrete files for user interface tab content and process functions to simplify maintenance and improve longevity.<br/>Reduced functionality releases are possible if new releases of Kodi / Python cause issues.<br/>The add-on uses images that are all < 3 kB each with the exception of the icon and fanart images. Installed add-on size < 2MB.<br/>There is a small amount of code to manage customised images for use by Code-E-Magpie only (configuration.py and service.py files).
 
 
 # Instructions
