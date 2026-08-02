@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>    
+<window>
+    <description>Window</description>
+    <defaulcontrol>8310</defaulcontrol>
+    <controls>
+        <control type="group" id="8000">
+            <centertop>50%</centertop>
+            <centerleft>50%</centerleft>
+            <width>1920</width>
+            <height>1080</height>
+
+        <!-- Background Image -->
+        <control type="image" id="8100">
+            <description>Background Image</description>
+            <top>-2000</top>
+            <left>-2000</left>
+            <width>6000</width>
+            <height>6000</height>
+            <animation effect="fade" time="300">VisibleChange</animation>
+            <animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
+            <animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+            <texture border="2">background.png</texture>
+        </control>
+
+        <!-- Inactive Background Button (avoids accidental closing) -->
+        <control type="button" id="8181">
+            <description>Inactive Background Button</description>
+            <top>0</top>
+            <bottom>0</bottom>
+            <left>0</left>
+            <right>0</right>
+            <onclick>noop</onclick>
+            <texturefocus/>
+            <texturenofocus/>
+        </control>
+        </control>
+
+        <!-- Header -->
+        <control type="label" id="8200">
+            <description>Header</description>
+            <top>0</top>
+            <width>1920</width>
+            <height>75</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <font>font13</font>
+        </control>
+
+        <!-- Content Panel Background Image -->
+        <control type="group" id="8300">
+            <control type="image">
+            <description>Content Panel Background Image</description>
+            <top>75</top>
+            <left>0</left>
+            <width>1920</width>
+            <height>1005</height>
+            <texture>background.png</texture>
+        </control>
+
+        <!-- Content Panel -->
+        <control type="group" id="8310">
+        <control type="panel" id="8320">
+            <description>Content Panel</description>
+            <top>75</top>
+            <left>25</left>
+            <width>1500</width>
+            <height>1005</height>
+            <orientation>vertical</orientation>
+            <pagecontrol>8400</pagecontrol>
+            <preloaditems>10</preloaditems>
+            <scrolltime tween="sine">200</scrolltime>
+            <onright>8400</onright>
+            <onup>8320</onup>
+            <ondown>8320</ondown>
+
+            <!-- Favourite (Image + Text) -->
+            <itemlayout width="300" height="335">
+            <control type="image" id="8330">
+                <description>Favourite (Image + Text)</description>
+                <bordersize>15, 10, 15, 10</bordersize>
+                <texture colordiffuse="FF000000">background_white.png</texture>
+                <visible>String.IsEmpty(ListItem.Property(selected))</visible>
+            </control>
+
+            <!-- Favourite Image + Default Image -->
+            <control type="image" id="8331">
+                <description>Favourite Image + Default Image</description>
+                <aspectratio>keep</aspectratio>
+                <scalediffuse>true</scalediffuse>
+                <bordersize>0</bordersize>
+                <top>5</top>
+                <left>15</left>
+                <height>270</height>
+                <width>270</width>
+                <texture fallback="default.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
+            </control>
+
+            <!-- Another image is required to highlight the favourite selected for moving.
+            The "clean" way is to change the color of a single image control using a variable
+            in Variables.xml. That would mean an extra file. -->
+
+            <!-- Selected Favourite Highlighted (Cursor Moved Away) -->
+            <control type="image" id="8332">
+                <description>Selected Favourite Highlighted (Cursor Moved Away)</description>
+                <bordersize>0</bordersize>
+                <texture colordiffuse="80FFFF00">background_white.png</texture>
+                <visible>!String.IsEmpty(ListItem.Property(selected))</visible>
+            </control>
+
+            <!-- Favourite Text -->
+            <control type="textbox" id="8333">
+                <top>275</top>
+                <left>15</left>
+                <width>270</width>
+                <height>50</height>
+                <align>left</align>
+                <aligny>top</aligny>
+                <font>font10</font>
+                <label>$INFO[ListItem.Label]</label>
+                <visible>!String.IsEqual(ListItem.DBType, album)</visible>
+            </control>
+            </itemlayout>
+
+            <!-- Cursor Favourite (Image + Text) -->
+            <focusedlayout width="300" height="350">
+            <control type="image" id="8340">
+                <description>Cursor Favourite Highlighted</description>
+                <bordersize>0</bordersize>
+                <texture colordiffuse="FF404040">background_white.png</texture>
+            </control>
+
+            <!-- Cursor Favourite Image + Default Image -->
+            <control type="image" id="8341">
+                <align>center</align>
+                <aligny>center</aligny>
+                <aspectratio>keep</aspectratio>
+                <scalediffuse>true</scalediffuse>
+                <bordersize>0</bordersize>
+                <top>5</top>
+                <left>15</left>
+                <height>270</height>
+                <width>270</width>
+                <texture fallback="default.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
+            </control>
+
+            <!-- Cursor Favourite Text -->
+            <control type="textbox" id="8342">
+                <top>275</top>
+                <left>15</left>
+                <width>270</width>
+                <height>75</height>
+                <align>left</align>
+                <aligny>top</aligny>
+                <autoscroll delay="1000" time="1000" repeat="2000"></autoscroll>
+                <font>font10</font>
+                <label>$INFO[ListItem.Label]</label>
+                <visible>!String.IsEqual(ListItem.DBType, album)</visible>
+            </control>
+
+            <!-- Cursor Favourite Highlighted (Cursor On Top) -->
+            <control type="image" id="8343">
+                <description>Highlighted Selected Favourite (Cursor On Top)</description>
+                <bordersize>10</bordersize>
+                <top>-10</top>
+                <bottom>-10</bottom>
+                <left>-10</left>
+                <right>-10</right>
+                <texture colordiffuse="80FFFF00">background_white.png</texture>
+                <visible>!String.IsEmpty(ListItem.Property(selected))</visible>
+            </control>
+            </focusedlayout>                     
+        </control>
+    </control>
+
+        <!-- Scrollbar Image -->
+        <control type="scrollbar" id="8400">
+            <description>Scrollbar Image</description>
+            <top>75</top>
+            <right>315</right>
+            <width>85</width>
+            <height>1005</height>
+            <orientation>vertical</orientation>
+            <showonepage>true</showonepage>
+            <subtype>text</subtype>
+            <texturesliderbackground>scrollbar-V-background.png</texturesliderbackground>
+            <texturesliderbar>scrollbar-V.png</texturesliderbar>
+            <texturesliderbarfocus colordiffuse="FFFFFF00">scrollbar-V-focus.png</texturesliderbarfocus>
+            <visible>true</visible>
+            <onleft>8310</onleft>
+            <onright>8500</onright>
+        </control>
+
+        <!-- Buttons -->
+        <control type="button" id="8500">
+            <description>Button - Close</description>
+            <top>80</top>
+            <right>30</right>
+            <width>290</width>
+            <height>325</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <font>font13</font>
+            <textoffsetx>10</textoffsetx>
+            <texturefocus colordiffuse="FFFFFF00">frame_V_grey.png</texturefocus>
+            <texturenofocus>frame_V_black_dim.png</texturenofocus>
+            <ondown>8501</ondown>
+            <onleft>8400</onleft>
+        </control>
+
+        <control type="button" id="8501">
+            <description>Button - Start Again</description>
+            <top>415</top>
+            <right>30</right>
+            <width>290</width>
+            <height>325</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <font>font13</font>
+            <textoffsetx>10</textoffsetx>
+            <texturefocus colordiffuse="FFFFFF00">frame_V_grey.png</texturefocus>
+            <texturenofocus>frame_V_black_dim.png</texturenofocus>
+            <onup>8500</onup>
+            <onleft>8400</onleft>
+        </control>
+
+        <!-- Dummy Button (Image + Text) -->
+        <control type="image" id="8502">
+            <description>Dummy Button - Image</description>
+            <top>750</top>
+            <left>1600</left>
+            <width>290</width>
+            <height>325</height>
+            <texture>frame_V_black_dim.png</texture>
+        </control>
+
+        <control type="label" id="8502">
+            <description>Dummy Button - Favourite Text</description>
+            <top>775</top>
+            <left>1630</left>
+            <width>230</width>
+            <height>275</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <font>font13</font>
+            <label fallback="[COLOR dimgray][B]F a v o u r i t e[CR][CR]T e x t[/B][/COLOR]" background="true">$INFO[ListItem.Label]</label>
+            <wrapmultiline>true</wrapmultiline>
+        </control>
+
+        </control>
+    </controls>
+</window>

@@ -38,7 +38,6 @@
                 <align>center</align>
                 <aligny>center</aligny>
                 <font>font13</font>
-                <label></label>
             </control>
 
             <!-- Content Panel -->
@@ -88,8 +87,6 @@
                 <align>center</align>
                 <aligny>center</aligny>
                 <font>font12</font>
-                <label>Close</label>
-                <textcolor>FFC0C0C0</textcolor>
                 <textoffsetx>20</textoffsetx>
                 <texturefocus colordiffuse="FFFFFF00">frame_grey.png</texturefocus>
                 <texturenofocus>frame_black.png</texturenofocus>
