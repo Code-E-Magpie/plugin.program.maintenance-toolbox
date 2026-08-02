@@ -65,7 +65,7 @@ Maintenance Toolbox will be maintained for new releases of Kodi and changes to P
 # Can you help ?
 There are a couple of ideas and niggles that may be possible to implement in the future.
 
-• Clear old thumbnails using settings to set number of days to retain.<br/>• Display most recent lines in new and old logs (e.g. display newest 1000 if >1000 in log file).<br/>• Handle checks where the certificate has expired but the link still works.<br/>• Consolidate Speedtest to single non executable file.
+• Clear old thumbnails using settings to set number of days to retain.<br/>• Display most recent lines in new and old logs (e.g. display newest 1000 if >1000 in log file).<br/>• Handle checks where the certificate has expired but the link still works.
 
 
 # IMPORTANT
