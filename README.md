@@ -57,8 +57,6 @@ Code debugged and reengineered where required using https://aipy.dev/tools
 # Future development
 Maintenance Toolbox functionality is simple and easy to use and will remain so.
 
-No further development of Maintenance Toolbox is planned (see the 'Can you help ?' section below).
-
 Maintenance Toolbox will be maintained for new releases of Kodi and changes to Python where possible.
 
 
