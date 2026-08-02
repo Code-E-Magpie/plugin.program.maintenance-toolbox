@@ -12,10 +12,16 @@
 #	- file content formatted
 #	- some functions and variables renamed
 #	- reworked Dialogue, Log and Notification
-#	- last save date captured using Settings_Set and visible in Settings
+#	- last save date captured using ADDON.setSetting and visible in Settings
 #	- functions consolidated to plugin.program.maintenance-toolbox > resources > lib > common > function.py
 #	- variables consolidated to plugin.program.maintenance-toolbox > resources > lib > common > configuration.py
 #	- code debugged and reengineered if required using https://aipy.dev/tools
+
+# ============================================================
+# File used by
+# ============================================================
+
+# interface.py
 
 # ============================================================
 # Import
@@ -27,18 +33,13 @@ import os, shutil
 from datetime import date, datetime, timedelta
 
 from resources.lib.common.configuration import configuration
-from resources.lib.common.function import Addon_Title, Dialogue, Log, Log_Title, Notification, Now, Settings_Set
-
-# ============================================================
-# File used by
-# ============================================================
-
-# interface.py
+from resources.lib.common.function import Addon_Title, Dialogue, Log, Log_Title, Notification, Now
 
 # ============================================================
 # Variables
 # ============================================================
 
+ADDON = configuration.ADDON
 GUISETTINGS = configuration.GUISETTINGS
 GUISETTINGS_FILE = configuration.GUISETTINGS_FILE
 GUISETTINGS_FOLDER = configuration.GUISETTINGS_FOLDER
@@ -65,7 +66,7 @@ def Guisettings_Backup():
 	if os.path.exists(GUISETTINGS):
 		shutil.copy(GUISETTINGS, GUISETTINGS_FOLDER)
 
-		Settings_Set('guisettings_backup_saved', Now())
+		ADDON.setSetting('guisettings_backup_saved', Now())
 
 		Notification(Addon_Title, '[COLOR %s]Backup GUI Settings: backup saved[/COLOR]' % TEXT_GENERAL)
 		Log(Log_Title + Guisettings + 'Backup GUI Settings: backup saved', xbmc.LOGINFO)
