@@ -12,7 +12,7 @@
 #	- file content formatted
 #	- some functions and variables renamed
 #	- reworked Dialogue, Log and Notification
-#	- last save date captured using Settings_Set and visible in Settings
+#	- last save date captured using ADDON.setSetting and visible in Settings
 #	- functions consolidated to plugin.program.maintenance-toolbox > resources > lib > common > function.py
 #	- variables consolidated to plugin.program.maintenance-toolbox > resources > lib > common > configuration.py
 #	- code debugged and reengineered if required using https://aipy.dev/tools
@@ -33,12 +33,13 @@ import os, shutil
 from datetime import date, datetime, timedelta
 
 from resources.lib.common.configuration import configuration
-from resources.lib.common.function import Addon_Title, Dialogue, List_Logs, Log, Log_Title, Notification, Now, Settings_Set
+from resources.lib.common.function import Addon_Title, Dialogue, List_Logs, Log, Log_Title, Notification, Now
 
 # ============================================================
 # Variables
 # ============================================================
 
+ADDON = configuration.ADDON
 LOG_NEW = configuration.LOG_NEW
 LOG_OLD = configuration.LOG_OLD
 LOGPATH = configuration.LOGPATH
@@ -71,7 +72,7 @@ def Logs_Backup():
 					destination_file = os.path.join(LOGS_FOLDER, item)
 					shutil.copy(source_file, destination_file)
 
-					Settings_Set('logs_backup_saved', Now())
+					ADDON.setSetting('logs_backup_saved', Now())
 					List_Logs(LOGPATH, LOGS_LIST)
 
 					Notification(Addon_Title, '[COLOR %s]Backup Logs: backup saved[/COLOR]' % TEXT_GENERAL)

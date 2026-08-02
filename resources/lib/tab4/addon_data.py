@@ -12,10 +12,16 @@
 #	- file content formatted
 #	- some functions and variables renamed
 #	- reworked Dialogue, Log and Notification
-#	- last save date captured using Settings_Set and visible in Settings
+#	- last save date captured using ADDON.setSetting and visible in Settings
 #	- functions consolidated to plugin.program.maintenance-toolbox > resources > lib > common > function.py
 #	- variables consolidated to plugin.program.maintenance-toolbox > resources > lib > common > configuration.py
 #	- code debugged and reengineered if required using https://aipy.dev/tools
+
+# ============================================================
+# File used by
+# ============================================================
+
+# interface.py
 
 # ============================================================
 # Import
@@ -27,18 +33,13 @@ import os, shutil
 from datetime import date, datetime, timedelta
 
 from resources.lib.common.configuration import configuration
-from resources.lib.common.function import Addon_Title, Dialogue, List_Folders, Log, Log_Title, Notification, Now, Settings_Set
-
-# ============================================================
-# File used by
-# ============================================================
-
-# interface.py
+from resources.lib.common.function import Addon_Title, Dialogue, List_Folders, Log, Log_Title, Notification, Now
 
 # ============================================================
 # Variables
 # ============================================================
 
+ADDON = configuration.ADDON
 ADDON_DATA = configuration.ADDON_DATA
 ADDON_DATA_FOLDER = configuration.ADDON_DATA_FOLDER
 ADDON_DATA_LIST = configuration.ADDON_DATA_LIST
@@ -61,7 +62,7 @@ def Addon_Data_Backup():
 
 	if not os.path.exists(ADDON_DATA_FOLDER):
 
-		backup_choice = Dialogue.yesno(Addon_Title, '[COLOR %s]Backup Add-on Data: [LIGHT](MT_addon_data)[/LIGHT] ~ 10 seconds[CR][COLOR %s]Kodi is unusable during this time. Message confirms completion.[/COLOR][CR][CR]Would you like to continue with the backup ?[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM), yeslabel = '[COLOR %s]Continue Backup[/COLOR]' % TEXT_VALUE, nolabel = '[COLOR %s]Cancel Backup[/COLOR]' % TEXT_HIGHLIGHT)
+		backup_choice = Dialogue.yesno(Addon_Title, '[COLOR %s]Backup Add-on Data: [LIGHT](MT_addon_data) ~ 10 seconds[CR][COLOR %s]Kodi is unusable during this time.[CR]Message confirms completion.[/LIGHT][/COLOR][CR]Would you like to continue with the backup ?[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM), yeslabel = '[COLOR %s]Continue Backup[/COLOR]' % TEXT_VALUE, nolabel = '[COLOR %s]Cancel Backup[/COLOR]' % TEXT_HIGHLIGHT)
 
 		if backup_choice == 0:
 			return
@@ -70,16 +71,16 @@ def Addon_Data_Backup():
 			if os.path.exists(ADDON_DATA):
 				shutil.copytree(ADDON_DATA, ADDON_DATA_FOLDER)
 
-				Settings_Set('addon_data_backup_saved', Now())
+				ADDON.setSetting('addon_data_backup_saved', Now())
 				List_Folders(ADDON_DATA, ADDON_DATA_LIST)
 
 				Notification(Addon_Title, '[COLOR %s]Backup Add-on Data: backup saved[/COLOR]' % TEXT_GENERAL)
 				Log(Log_Title + Addon_Data + 'Backup Add-on Data: backup saved', xbmc.LOGINFO)
-				Dialogue.ok(Addon_Title, '[COLOR %s]Backup Add-on Data: [LIGHT](MT_addon_data)[CR][COLOR %s]Add-on Data backup saved. Kodi is now usable.[/LIGHT][/COLOR][CR][CR]Press OK to continue.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
-					
+				Dialogue.ok(Addon_Title, '[COLOR %s]Backup Add-on Data: [LIGHT](MT_addon_data)[CR][COLOR %s]Add-on Data backup saved.[CR]Kodi is now usable.[/LIGHT][/COLOR][CR]Press OK to continue.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
+
 	else:
-			Dialogue.ok(Addon_Title, '[COLOR %s]Backup Add-on Data: [LIGHT](MT_addon_data)[/LIGHT][CR][CR]Backup already exists: run Delete Backup Add-on Data[CR]Or move / rename backup folder to keep it and try again.[/COLOR]' % TEXT_GENERAL)
-			
+			Dialogue.ok(Addon_Title, '[COLOR %s]Backup Add-on Data: [LIGHT](MT_addon_data)[CR][COLOR %s]Run Delete Backup Add-on Data[CR]or move / rename backup folder to keep it and try again.[/LIGHT][/COLOR][CR]Backup already exists.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
+
 # ============================================================
 # FUNCTION: Addon_Data_Delete
 # ============================================================
@@ -88,7 +89,7 @@ def Addon_Data_Delete():
 
 	if os.path.exists(ADDON_DATA_FOLDER):
 
-		delete_choice = Dialogue.yesno(Addon_Title, '[COLOR %s]Delete Backup Add-on Data: [LIGHT](MT_addon_data)[/LIGHT] ~ 5 seconds[CR][COLOR %s]Kodi is unusable during this time. Message confirms completion.[/COLOR][CR][CR]Would you like to delete the backup ?[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM), yeslabel = ('[COLOR %s]Delete Backup[/COLOR]' % TEXT_VALUE), nolabel = ('[COLOR %s]Keep Backup[/COLOR]' % TEXT_HIGHLIGHT))
+		delete_choice = Dialogue.yesno(Addon_Title, '[COLOR %s]Delete Backup Add-on Data: [LIGHT](MT_addon_data) ~ 5 seconds[CR][COLOR %s]Kodi is unusable during this time.[CR]Message confirms completion.[/LIGHT][/COLOR][CR]Would you like to delete the backup ?[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM), yeslabel = ('[COLOR %s]Delete Backup[/COLOR]' % TEXT_VALUE), nolabel = ('[COLOR %s]Keep Backup[/COLOR]' % TEXT_HIGHLIGHT))
 
 		if delete_choice == 0:
 			return
@@ -98,7 +99,7 @@ def Addon_Data_Delete():
 
 			Notification(Addon_Title, '[COLOR %s]Delete Backup Add-on Data: backup deleted[/COLOR]' % TEXT_GENERAL)
 			Log(Log_Title + Addon_Data + 'Delete Backup Add-on Data: backup deleted', xbmc.LOGINFO)
-			Dialogue.ok(Addon_Title, '[COLOR %s]Delete Backup Add-on Data: [LIGHT](MT_addon_data)[CR][COLOR %s]Add-on Data backup deleted. Kodi is now usable.[/LIGHT][/COLOR][CR][CR]Press OK to continue.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
+			Dialogue.ok(Addon_Title, '[COLOR %s]Delete Backup Add-on Data: [LIGHT](MT_addon_data)[CR][COLOR %s]Add-on Data backup deleted.[CR]Kodi is now usable.[/LIGHT][/COLOR][CR]Press OK to continue.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
 
 	else:
 		Notification(Addon_Title, '[COLOR %s]Delete Backup Add-on Data: none found[/COLOR]' % TEXT_GENERAL)
