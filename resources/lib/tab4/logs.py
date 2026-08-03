@@ -9,9 +9,6 @@
 # type: log
 # functionality: new system log and old system log backup and delete backup of special://logpath + list logs in text file
 # development:
-#	- file content formatted
-#	- some functions and variables renamed
-#	- reworked Dialogue, Log and Notification
 #	- last save date captured using ADDON.setSetting and visible in Settings
 #	- functions consolidated to plugin.program.maintenance-toolbox > resources > lib > common > function.py
 #	- variables consolidated to plugin.program.maintenance-toolbox > resources > lib > common > configuration.py

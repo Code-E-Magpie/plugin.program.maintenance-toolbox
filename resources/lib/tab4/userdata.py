@@ -9,9 +9,6 @@
 # type: backup and restore
 # functionality: userdata backup and delete backup of special://home/userdata excluding Thumbnails and addon_data folders + list userdata in text file
 # development:
-#	- file content formatted
-#	- some functions and variables renamed
-#	- reworked Dialogue, Log and Notification
 #	- last save date captured using ADDON.setSetting and visible in Settings
 #	- functions consolidated to plugin.program.maintenance-toolbox > resources > lib > common > function.py
 #	- variables consolidated to plugin.program.maintenance-toolbox > resources > lib > common > configuration.py
