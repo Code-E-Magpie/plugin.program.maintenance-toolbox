@@ -4,14 +4,11 @@
 #################################
 # ============================================================
 
-# sourced from: plugin.program.aliundek19gui.maintenance.wizardz > wizard.py
+# sourced from: new development
 # location: plugin.program.maintenance-toolbox > resources > lib > tab3 > favourites_xml.py
 # type: backup and restore
 # functionality: favourites backup and restore of special://userdata/favourites.xml
 # development:
-#	- file content formatted
-#	- some functions and variables renamed
-#	- reworked Dialogue, Log and Notification
 #	- last save date captured using ADDON.setSetting and visible in Settings
 #	- functions consolidated to plugin.program.maintenance-toolbox > resources > lib > common > function.py
 #	- variables consolidated to plugin.program.maintenance-toolbox > resources > lib > common > configuration.py
