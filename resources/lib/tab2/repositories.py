@@ -35,7 +35,6 @@ from resources.lib.common.function import Addon_Title, Dialogue, Log, Log_Title,
 
 ADDON = configuration.ADDON
 DATABASE = configuration.DATABASE
-SPACER_ROW = ADDON.getSetting('SPACER_ROW')
 TEXT_DARK = configuration.TEXT_DARK
 TEXT_GENERAL = configuration.TEXT_GENERAL
 TEXT_HIGHLIGHT = configuration.TEXT_HIGHLIGHT
@@ -94,11 +93,18 @@ def Check_Repositories():
 			repo_table = 'SELECT CASE WHEN checksum IS NULL THEN "Bad" ELSE "Good" END AS status, lastcheck, nextcheck, version, addonID FROM repo ORDER BY LOWER(addonID) ASC'
 		if not_working > 0:
 			repo_table = 'SELECT CASE WHEN checksum IS NULL THEN "Bad" ELSE "Good" END AS status, lastcheck, nextcheck, version, addonID FROM repo WHERE checksum IS NULL ORDER BY LOWER(addonID) ASC'
+		
+		choice = Dialogue.yesno(Addon_Title, '[COLOR %s]Check Repositories: [LIGHT](Blank Row)[CR][COLOR %s] > Add Blank row between each new line.[CR] > No Blank row between each new line.[/LIGHT][/COLOR][CR]Add a blank row between each new line ?[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM), yeslabel = ('[COLOR %s]Add Blank[/COLOR]' % TEXT_VALUE), nolabel = ('[COLOR %s]No Blank[/COLOR]' % TEXT_HIGHLIGHT))
+
+		if choice == 1:
+			BLANK_ROW = 'true'
+		else:
+			BLANK_ROW = 'false'
 
 		cursor.execute(repo_table)
 
 		repo_table = cursor.fetchall()
-		repo_table = str(repo_table).replace("[","('Status', 'Kodi Last Checked', 'Kodi Next Check', '\tVersion', 'Add-on ID'), ").replace("]","").replace("(","").replace("), ",("\n\n" if SPACER_ROW == 'true' else "\n")).replace("'","").replace(")","").replace(", ","     \t\t")
+		repo_table = str(repo_table).replace("[","('Status', 'Kodi Last Checked', 'Kodi Next Check', '\tVersion', 'Add-on ID'), ").replace("]","").replace("(","").replace("), ",("\n\n" if BLANK_ROW == 'true' else "\n")).replace("'","").replace(")","").replace(", ","     \t\t")
 
 		connection.commit()
 
