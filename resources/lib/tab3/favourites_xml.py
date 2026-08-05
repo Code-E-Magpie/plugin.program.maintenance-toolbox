@@ -42,6 +42,7 @@ FAVOURITES_FILE = configuration.FAVOURITES_FILE
 FAVOURITES_FOLDER = configuration.FAVOURITES_FOLDER
 TEXT_GENERAL = configuration.TEXT_GENERAL
 TEXT_HIGHLIGHT = configuration.TEXT_HIGHLIGHT
+TEXT_ITEM = configuration.TEXT_ITEM
 TEXT_VALUE = configuration.TEXT_VALUE
 USERDATA = configuration.USERDATA
 
@@ -79,7 +80,7 @@ def Favourites_Delete():
 
 	if os.path.exists(FAVOURITES_FILE):
 
-		choice = Dialogue.yesno(Addon_Title, '[COLOR %s]Delete Backup Favourites: [LIGHT](MT_favourites/favourites.xml)[/LIGHT][CR][CR]Would you like to delete the favourites backup ?[/COLOR]' % TEXT_GENERAL, yeslabel = ('[COLOR %s]Delete Backup[/COLOR]' % TEXT_VALUE), nolabel = ('[COLOR %s]Keep Backup[/COLOR]' % TEXT_HIGHLIGHT))
+		choice = Dialogue.yesno(Addon_Title, '[COLOR %s]Delete Backup Favourites: [LIGHT](MT_favourites/favourites.xml)[CR][COLOR %s]Automatic tab refresh after Delete Backup.[CR]Automatic tab refresh after Keep Backup.[/LIGHT][/COLOR][CR]Would you like to delete the backup ?[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM), yeslabel = ('[COLOR %s]Delete Backup[/COLOR]' % TEXT_VALUE), nolabel = ('[COLOR %s]Keep Backup[/COLOR]' % TEXT_HIGHLIGHT))
 
 		if choice == 0:
 			return

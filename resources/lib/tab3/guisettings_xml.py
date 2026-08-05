@@ -42,6 +42,7 @@ GUISETTINGS_FILE = configuration.GUISETTINGS_FILE
 GUISETTINGS_FOLDER = configuration.GUISETTINGS_FOLDER
 TEXT_GENERAL = configuration.TEXT_GENERAL
 TEXT_HIGHLIGHT = configuration.TEXT_HIGHLIGHT
+TEXT_ITEM = configuration.TEXT_ITEM
 TEXT_VALUE = configuration.TEXT_VALUE
 USERDATA = configuration.USERDATA
 
@@ -79,7 +80,7 @@ def Guisettings_Delete():
 
 	if os.path.exists(GUISETTINGS_FILE):
 
-		choice = Dialogue.yesno(Addon_Title, '[COLOR %s]Delete Backup GUI Settings: [LIGHT](MT_guisettings/guisettings.xml)[/LIGHT][CR][CR]Would you like to delete the GUI settings backup ?[/COLOR]' % TEXT_GENERAL, yeslabel = ('[COLOR %s]Delete Backup[/COLOR]' % TEXT_VALUE), nolabel = ('[COLOR %s]Keep Backup[/COLOR]' % TEXT_HIGHLIGHT))
+		choice = Dialogue.yesno(Addon_Title, '[COLOR %s]Delete Backup GUI Settings: [LIGHT](MT_guisettings/guisettings.xml)[CR][COLOR %s]Automatic tab refresh after Delete Backup.[CR]Automatic tab refresh after Keep Backup.[/LIGHT][/COLOR][CR]Would you like to delete the backup ?[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM), yeslabel = ('[COLOR %s]Delete Backup[/COLOR]' % TEXT_VALUE), nolabel = ('[COLOR %s]Keep Backup[/COLOR]' % TEXT_HIGHLIGHT))
 
 		if choice == 0:
 			return
