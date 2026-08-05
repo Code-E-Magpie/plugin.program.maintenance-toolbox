@@ -76,7 +76,7 @@ def Addon_Data_Backup():
 				Dialogue.ok(Addon_Title, '[COLOR %s]Backup Add-on Data: [LIGHT](MT_addon_data)[CR][COLOR %s]Add-on Data backup saved.[CR]Kodi is now usable.[/LIGHT][/COLOR][CR]Press OK to continue.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
 
 	else:
-			Dialogue.ok(Addon_Title, '[COLOR %s]Backup Add-on Data: [LIGHT](MT_addon_data)[CR][COLOR %s]Run Delete Backup Add-on Data[CR]or move / rename backup folder to keep it and try again.[/LIGHT][/COLOR][CR]Backup already exists.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
+			Dialogue.ok(Addon_Title, '[COLOR %s]Backup Add-on Data: [LIGHT](MT_addon_data)[CR][COLOR %s]Run Delete Backup Add-on Data or[CR]move / rename backup folder to keep it and try again.[/LIGHT][/COLOR][CR]Backup already exists.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
 
 # ============================================================
 # FUNCTION: Addon_Data_Delete

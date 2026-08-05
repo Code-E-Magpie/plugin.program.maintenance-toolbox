@@ -39,6 +39,7 @@ from resources.lib.common.function import Addon_Title, Dialogue, List_Files, Log
 ADDON = configuration.ADDON
 TEXT_GENERAL = configuration.TEXT_GENERAL
 TEXT_HIGHLIGHT = configuration.TEXT_HIGHLIGHT
+TEXT_ITEM = configuration.TEXT_ITEM
 TEXT_VALUE = configuration.TEXT_VALUE
 USERDATA = configuration.USERDATA
 USERDATA_FOLDER = configuration.USERDATA_FOLDER
@@ -80,7 +81,7 @@ def Userdata_Backup():
 			Log(Log_Title + Userdata + 'Backup Userdata: backup saved', xbmc.LOGINFO)
 
 	else:
-			Dialogue.ok(Addon_Title, '[COLOR %s]Backup Userdata: [LIGHT](MT_userdata)[/LIGHT][CR][CR]Backup already exists: run Delete Backup Userdata[CR]Or move / rename backup folder to keep it and try again.[/COLOR]' % TEXT_GENERAL)
+			Dialogue.ok(Addon_Title, '[COLOR %s]Backup Userdata: [LIGHT](MT_userdata)[CR][COLOR %s]Run Delete Backup Userdata or[CR]move / rename backup folder to keep it and try again.[/LIGHT][/COLOR][CR]Backup already exists.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
 
 # ============================================================
 # FUNCTION: Userdata_Delete
@@ -90,7 +91,7 @@ def Userdata_Delete():
 
 	if os.path.exists(USERDATA_FOLDER):
 
-		choice = Dialogue.yesno(Addon_Title, '[COLOR %s]Delete Backup Userdata: [LIGHT](MT_userdata)[/LIGHT][CR][CR]Would you like to delete the backup ?[/COLOR]' % TEXT_GENERAL, yeslabel = ('[COLOR %s]Delete Backup[/COLOR]' % TEXT_VALUE), nolabel = ('[COLOR %s]Keep Backup[/COLOR]' % TEXT_HIGHLIGHT))
+		choice = Dialogue.yesno(Addon_Title, '[COLOR %s]Delete Backup Userdata: [LIGHT](MT_userdata)[CR][COLOR %s]Automatic tab refresh after Delete Backup.[CR]Automatic tab refresh after Keep Backup.[/LIGHT][/COLOR][CR]Would you like to delete the backup ?[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM), yeslabel = ('[COLOR %s]Delete Backup[/COLOR]' % TEXT_VALUE), nolabel = ('[COLOR %s]Keep Backup[/COLOR]' % TEXT_HIGHLIGHT))
 
 		if choice == 0:
 			return

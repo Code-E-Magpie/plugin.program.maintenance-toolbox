@@ -79,7 +79,7 @@ def Addons_Backup():
 				Dialogue.ok(Addon_Title, '[COLOR %s]Backup Add-ons: [LIGHT](MT_addons)[CR][COLOR %s]Add-ons backup saved.[CR]Kodi is now usable.[/LIGHT][/COLOR][CR]Press OK to continue.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
 
 	else:
-			Dialogue.ok(Addon_Title, '[COLOR %s]Backup Add-ons: [LIGHT](MT_addons)[CR][COLOR %s]Run Delete Backup Add-ons[CR]or move / rename backup folder to keep it and try again.[/LIGHT][/COLOR][CR]Backup already exists.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
+			Dialogue.ok(Addon_Title, '[COLOR %s]Backup Add-ons: [LIGHT](MT_addons)[CR][COLOR %s]Run Delete Backup Add-ons or[CR]move / rename backup folder to keep it and try again.[/LIGHT][/COLOR][CR]Backup already exists.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
 
 # ============================================================
 # FUNCTION: Addons_Delete
