@@ -27,7 +27,7 @@ import xbmc, xbmcgui
 import glob, os, re, sqlite3
 
 from resources.lib.common.configuration import configuration
-from resources.lib.common.function import Addon_Title, Dialogue, Log, Log_Title, Now, TextBox
+from resources.lib.common.function import Addon_Title, Addons_Database, Dialogue, Log, Log_Title, Now, TextBox
 
 # ============================================================
 # Variables
@@ -52,23 +52,8 @@ Repositories = ('[COLOR %s]repositories > [/COLOR]' % TEXT_GENERAL)
 # ============================================================
 
 def Check_Repositories():
-	
-	pattern = re.compile(r'Addons(\d+)\.db$', re.IGNORECASE)
-	matches = glob.glob(os.path.join(DATABASE, 'Addons*.db'))
-	highest = 0
 
-	for file in matches:
-		basename = os.path.basename(file)
-		file_match = pattern.search(basename)
-		if file_match:
-			try:
-				number = int(file_match.group(1))
-			except ValueError:
-				continue
-			if number > highest:
-				highest = number
-
-	addons_db = "Addons%s.db" % highest
+	addons_db = Addons_Database()
 
 	Dialogue.ok(Addon_Title, '[COLOR %s]Check Repositories: [LIGHT](Check Information)[CR][COLOR %s]Repositories may not work due to internet connectivity issues;[CR]or the host server being unavailable (maintenance etc.)[/LIGHT][/COLOR][CR]Run at different times on different days before removing.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
 
