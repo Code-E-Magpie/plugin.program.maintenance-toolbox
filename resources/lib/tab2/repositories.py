@@ -100,11 +100,11 @@ def Check_Repositories():
 		choice = Dialogue.yesno(Addon_Title, '[COLOR %s]Check Repositories: [LIGHT](Blank Row)[CR][COLOR %s] > Add Blank row between each new line.[CR] > No Blank row between each new line.[/LIGHT][/COLOR][CR]Add a blank row between each new line ?[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM), yeslabel = ('[COLOR %s]Add Blank[/COLOR]' % TEXT_VALUE), nolabel = ('[COLOR %s]No Blank[/COLOR]' % TEXT_HIGHLIGHT))
 
 		if choice == 1:
-			BLANK_ROW = 'true'
+			add_blank = 'true'
 		else:
-			BLANK_ROW = 'false'
+			add_blank = 'false'
 
-		repo_table = str(repo_table).replace("[","('Status', 'Kodi Last Checked', 'Kodi Next Check', '\tVersion', 'Add-on ID'), ").replace("]","").replace("(","").replace("), ",("\n\n" if BLANK_ROW == 'true' else "\n")).replace("'","").replace(")","").replace(", ","     \t\t")
+		repo_table = str(repo_table).replace("[","('Status', 'Kodi Last Checked', 'Kodi Next Check', '\tVersion', 'Add-on ID'), ").replace("]","").replace("(","").replace("), ",("\n\n" if add_blank == 'true' else "\n")).replace("'","").replace(")","").replace(", ","     \t\t")
 
 		connection.commit()
 
