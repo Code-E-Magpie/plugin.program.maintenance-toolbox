@@ -93,7 +93,10 @@ def Check_Repositories():
 			repo_table = 'SELECT CASE WHEN checksum IS NULL THEN "Bad" ELSE "Good" END AS status, lastcheck, nextcheck, version, addonID FROM repo ORDER BY LOWER(addonID) ASC'
 		if not_working > 0:
 			repo_table = 'SELECT CASE WHEN checksum IS NULL THEN "Bad" ELSE "Good" END AS status, lastcheck, nextcheck, version, addonID FROM repo WHERE checksum IS NULL ORDER BY LOWER(addonID) ASC'
-		
+
+		cursor.execute(repo_table)
+		repo_table = cursor.fetchall()
+
 		choice = Dialogue.yesno(Addon_Title, '[COLOR %s]Check Repositories: [LIGHT](Blank Row)[CR][COLOR %s] > Add Blank row between each new line.[CR] > No Blank row between each new line.[/LIGHT][/COLOR][CR]Add a blank row between each new line ?[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM), yeslabel = ('[COLOR %s]Add Blank[/COLOR]' % TEXT_VALUE), nolabel = ('[COLOR %s]No Blank[/COLOR]' % TEXT_HIGHLIGHT))
 
 		if choice == 1:
@@ -101,9 +104,6 @@ def Check_Repositories():
 		else:
 			BLANK_ROW = 'false'
 
-		cursor.execute(repo_table)
-
-		repo_table = cursor.fetchall()
 		repo_table = str(repo_table).replace("[","('Status', 'Kodi Last Checked', 'Kodi Next Check', '\tVersion', 'Add-on ID'), ").replace("]","").replace("(","").replace("), ",("\n\n" if BLANK_ROW == 'true' else "\n")).replace("'","").replace(")","").replace(", ","     \t\t")
 
 		connection.commit()
@@ -133,7 +133,7 @@ def Check_Repositories():
 
 	elif not_working != 0:
 		Repository_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: %s%s)[/LIGHT][/COLOR][CR][CR][COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join('REPOSITORIES NOT WORKING'), TEXT_VALUE, DATABASE, addons_db, TEXT_GENERAL, repo_table)
-		TextBox('[B]%s[/B][CR][COLOR %s]Repositories: [/COLOR][COLOR %s]%s  [/COLOR][COLOR %s]Not working: [/COLOR][COLOR %s]%s[/COLOR]' % (Addon_Title, TEXT_ITEM, TEXT_VALUE, repository_count, TEXT_ITEM, TEXT_VALUE, not_working), Repository_Text)
+		TextBox('[B]%s[/B][CR][COLOR %s]Repositories: [/COLOR][COLOR %s]%s  [/COLOR][COLOR %s][LIGHT]Not working: [/COLOR][COLOR %s]%s[/LIGHT][/COLOR]' % (Addon_Title, TEXT_ITEM, TEXT_VALUE, repository_count, TEXT_ITEM, TEXT_VALUE, not_working), Repository_Text)
 		Dialogue.ok(Addon_Title, '[COLOR %s]Check Repositories: [LIGHT](Check Information)[CR][COLOR %s]Check My add-ons for updates. Select repository > versions.[CR]A new source for the repository may be required.[/LIGHT][/COLOR][CR]Run at different times on different days before removing.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
 
 	Log(Log_Title + Repositories + '[COLOR %s][LIGHT]Finished (check repositories: %s%s)[/LIGHT][/COLOR]' % (TEXT_DARK, DATABASE, addons_db), xbmc.LOGINFO)
