@@ -9,9 +9,6 @@
 # type: connection
 # functionality: check sources excluding storage locations
 # development:
-#	- file content formatted
-#	- some functions and variables renamed
-#	- reworked Dialogue, Log and Notification
 #	- last checked date and totals captured using ADDON.setSetting
 #	- formatting of source name retained in notifications and dialogue boxes (colour, bold etc.)
 #	- connection error handling added when network is "Not connected" or internet not "Connected"

@@ -9,9 +9,6 @@
 # type: connection
 # functionality: function to run speedtest_ookla.py
 # development:
-#	- file content formatted
-#	- some functions and variables renamed
-#	- reworked Dialogue, Log and Notification
 #	- last checked date captured using ADDON.setSetting and visible in Settings
 #	- connection error handling added when network is "Not connected" or internet not "Connected"
 #	- functions consolidated to plugin.program.maintenance-toolbox > resources > lib > common > function.py

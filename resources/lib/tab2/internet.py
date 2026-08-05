@@ -9,9 +9,6 @@
 # type: data source
 # functionality: API (Application Programming Interface) internet information e.g. ISP, external IP address etc.
 # development:
-#	- file content formatted
-#	- some functions and variables renamed
-#	- reworked Log and Notification
 #	- new configuration using single data source (original dual source failed testing)
 #	- user interface indicates when internet.py file needs updating i.e. when internet is connected but no data returned
 #	- added notification when network "Not connected"
@@ -23,7 +20,7 @@
 # File used by
 # ============================================================
 
-# information.py
+# information.py (API only)
 # interface.py
 
 # ============================================================
@@ -44,7 +41,7 @@ from resources.lib.common.function import Addon_Title, Log, Log_Title, Notificat
 # ============================================================
 
 ADDON_DATA = configuration.ADDON_DATA
-API = 'http://ip-api.com/json' # used by userinfo.py
+API = 'http://ip-api.com/json'
 TEXT_GENERAL = configuration.TEXT_GENERAL
 USER_AGENT = configuration.USER_AGENT
 

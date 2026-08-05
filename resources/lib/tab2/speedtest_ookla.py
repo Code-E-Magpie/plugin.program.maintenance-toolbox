@@ -10,9 +10,7 @@
 # type: connection
 # functionality: broadband speed check using Speedtest by Ookla
 # development:
-#	- file content formatted
 #	- some functions and variables renamed (701: DeprecationWarning: isSet() is deprecated, use is_set() instead)
-#	- reworked Dialogue, Log and Notification
 #	- unable to link to configuraton etc due to speedtest.py xbmc.executebuiltin('RunScript("special://home/addons/plugin.program.maintenance-toolbox/resources/lib/tab2/speedtest_ookla.py")')
 #	- code debugged and reengineered if required using https://aipy.dev/tools
 
