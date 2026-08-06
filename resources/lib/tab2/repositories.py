@@ -7,7 +7,7 @@
 # sourced from: new development
 # location: plugin.program.maintenance-toolbox > resources > lib > tab2 > repositories.py
 # type: connection
-# functionality: check repositories in the repo table of the Addons*.db database (Addons33.db for Kodi Omega 21.2)
+# functionality: check repositories in the repo table of the Addons#.db database (Addons33.db for Kodi Omega 21.2)
 # development:
 #	- functions consolidated to plugin.program.maintenance-toolbox > resources > lib > common > function.py
 #	- variables consolidated to plugin.program.maintenance-toolbox > resources > lib > common > configuration.py
