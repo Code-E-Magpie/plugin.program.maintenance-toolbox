@@ -63,21 +63,21 @@ def Check_Repositories():
 		connection = sqlite3.connect(os.path.join(DATABASE, addons_db))
 		cursor = connection.cursor()
 
-		repository_count = 'SELECT COUNT (*) FROM repo'
+		repository_count = "SELECT COUNT (*) FROM repo"
 		cursor.execute(repository_count)
 		repository_count = cursor.fetchall()
 		repository_count = int(str(repository_count)[2: -3])
 
-		not_working = 'SELECT COUNT (*) FROM repo WHERE checksum IS NULL'
+		not_working = "SELECT COUNT (*) FROM repo WHERE checksum IS NULL"
 		cursor.execute(not_working)
 		not_working = cursor.fetchall()
 		not_working = int(str(not_working)[2: -3])
 		working = str(repository_count - not_working)
 
 		if not_working == 0:
-			repo_table = 'SELECT CASE WHEN checksum IS NULL THEN "Bad " ELSE "Good" END AS status, lastcheck, nextcheck, version, addonID FROM repo ORDER BY LOWER(addonID) ASC'
+			repo_table = "SELECT CASE WHEN checksum IS NULL THEN 'Bad ' ELSE 'Good' END AS status, lastcheck, nextcheck, version, addonID FROM repo ORDER BY LOWER(addonID) ASC"
 		if not_working > 0:
-			repo_table = 'SELECT CASE WHEN checksum IS NULL THEN "Bad " ELSE "Good" END AS status, lastcheck, nextcheck, version, addonID FROM repo WHERE checksum IS NULL ORDER BY LOWER(addonID) ASC'
+			repo_table = "SELECT CASE WHEN checksum IS NULL THEN 'Bad ' ELSE 'Good' END AS status, lastcheck, nextcheck, version, addonID FROM repo WHERE checksum IS NULL ORDER BY LOWER(addonID) ASC"
 
 		cursor.execute(repo_table)
 		repo_table = cursor.fetchall()
