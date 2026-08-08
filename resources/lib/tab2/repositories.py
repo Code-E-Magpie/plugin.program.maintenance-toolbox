@@ -75,9 +75,9 @@ def Check_Repositories():
 		working = str(repository_count - not_working)
 
 		if not_working == 0:
-			repo_table = 'SELECT CASE WHEN checksum IS NULL THEN "Bad" ELSE "Good" END AS status, lastcheck, nextcheck, version, addonID FROM repo ORDER BY LOWER(addonID) ASC'
+			repo_table = 'SELECT CASE WHEN checksum IS NULL THEN "Bad " ELSE "Good" END AS status, lastcheck, nextcheck, version, addonID FROM repo ORDER BY LOWER(addonID) ASC'
 		if not_working > 0:
-			repo_table = 'SELECT CASE WHEN checksum IS NULL THEN "Bad" ELSE "Good" END AS status, lastcheck, nextcheck, version, addonID FROM repo WHERE checksum IS NULL ORDER BY LOWER(addonID) ASC'
+			repo_table = 'SELECT CASE WHEN checksum IS NULL THEN "Bad " ELSE "Good" END AS status, lastcheck, nextcheck, version, addonID FROM repo WHERE checksum IS NULL ORDER BY LOWER(addonID) ASC'
 
 		cursor.execute(repo_table)
 		repo_table = cursor.fetchall()
@@ -89,7 +89,7 @@ def Check_Repositories():
 		else:
 			add_blank = 'false'
 
-		repo_table = str(repo_table).replace("[","('Status', 'Kodi Last Checked', 'Kodi Next Check', '\tVersion', 'Add-on ID'), ").replace("]","").replace("(","").replace("), ",("\n\n" if add_blank == 'true' else "\n")).replace("'","").replace(")","").replace(", ","     \t\t")
+		repo_table = str(repo_table).replace("[('","Status', 'Kodi Last Checked', 'Kodi Next Check', '\tVersion', 'Add-on ID'), ('").replace("')]","").replace("'), ('",("\n\n" if add_blank == 'true' else "\n")).replace("', '","     \t\t")
 
 		connection.commit()
 
