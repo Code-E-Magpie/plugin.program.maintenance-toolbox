@@ -79,7 +79,7 @@ def Log(msg, level = xbmc.LOGDEBUG):
 # Create DialogueProgress
 # ============================================================
 
-prefix = ('[COLOR %s]Speedtest by Ookla: [LIGHT](Cancel Button Deactivated)[/LIGHT][CR]The summary will follow the download figure.[/COLOR]\n' % TEXT_GENERAL)
+prefix = ('[COLOR %s]Speedtest by Ookla: [LIGHT](Cancel Button Deactivated)[/COLOR][CR][COLOR %s]The summary will follow the download figure.[/LIGHT][/COLOR]\n' % (TEXT_GENERAL, TEXT_ITEM))
 
 DialogueProgress.create(Addon_Title, prefix + 'Initialising...')
 downloadString = '0'

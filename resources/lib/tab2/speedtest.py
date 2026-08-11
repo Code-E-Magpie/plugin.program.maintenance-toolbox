@@ -42,6 +42,7 @@ SPEEDTEST_PNG = configuration.SPEEDTEST_PNG
 SPEEDTEST_TXT = configuration.SPEEDTEST_TXT
 TEXT_DARK = configuration.TEXT_DARK
 TEXT_GENERAL = configuration.TEXT_GENERAL
+TEXT_ITEM = configuration.TEXT_ITEM
 
 # ============================================================
 # Speedtest
@@ -116,7 +117,7 @@ def Speedtest_Ookla():
 		return False
 
 	try:
-		Dialogue.ok(Addon_Title, '[COLOR %s]Speedtest by Ookla: [LIGHT](User Information)[/LIGHT][CR]The next dialogue box shows the test running.[CR]The summary will follow the download figure.[CR]Press summary OK for Speedtest Report.[/COLOR]' % TEXT_GENERAL)
+		Dialogue.ok(Addon_Title, '[COLOR %s]Speedtest by Ookla: [LIGHT](User Information)[CR][COLOR %s][LIGHT]The next dialogue box shows the test running.[CR]The summary will follow the download figure.[/LIGHT][/COLOR][CR]Press summary OK for Speedtest Report.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
 		Log(Log_Title + Speedtest + '[COLOR %s][LIGHT]Started (Speedtest by Ookla)[/LIGHT][/COLOR]' % TEXT_DARK, xbmc.LOGINFO)
 		ADDON.setSetting('speedtest_last_checked', Now())
 
