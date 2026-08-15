@@ -23,11 +23,11 @@
 # Import
 # ============================================================
 
-import xbmc, xbmcgui
-import glob, os, re, sqlite3
+import xbmc
+import os, sqlite3
 
 from resources.lib.common.configuration import configuration
-from resources.lib.common.function import Addon_Title, Addons_Db, Dialogue, Log, Log_Title, Now, TextBox
+from resources.lib.common.function import Add_Blank, Addon_Title, Addons_Db, Dialogue, Log, Log_Title, Now, TextBox
 
 # ============================================================
 # Variables
@@ -37,7 +37,6 @@ ADDON = configuration.ADDON
 DATABASE = configuration.DATABASE
 TEXT_DARK = configuration.TEXT_DARK
 TEXT_GENERAL = configuration.TEXT_GENERAL
-TEXT_HIGHLIGHT = configuration.TEXT_HIGHLIGHT
 TEXT_ITEM = configuration.TEXT_ITEM
 TEXT_VALUE = configuration.TEXT_VALUE
 
@@ -75,21 +74,12 @@ def Check_Repositories():
 		working = str(repository_count - not_working)
 
 		if not_working == 0:
-			repo_table = "SELECT CASE WHEN checksum IS NULL THEN 'Bad ' ELSE 'Good' END AS status, lastcheck, nextcheck, version, addonID FROM repo ORDER BY LOWER(addonID) ASC"
-		if not_working > 0:
-			repo_table = "SELECT CASE WHEN checksum IS NULL THEN 'Bad ' ELSE 'Good' END AS status, lastcheck, nextcheck, version, addonID FROM repo WHERE checksum IS NULL ORDER BY LOWER(addonID) ASC"
+			repo_table = "SELECT CASE WHEN checksum IS NULL THEN 'Bad     ' ELSE 'Good    ' END AS status, lastcheck, nextcheck, CASE WHEN length(version) >= 8 THEN version ELSE substr(version || '        ', 1, 8) END AS version, addonID FROM repo ORDER BY LOWER(addonID) ASC"
+		if not_working != 0:
+			repo_table = "SELECT CASE WHEN checksum IS NULL THEN 'Bad     ' ELSE 'Good    ' END AS status, lastcheck, nextcheck, CASE WHEN length(version) >= 8 THEN version ELSE substr(version || '        ', 1, 8) END AS version, addonID FROM repo WHERE checksum IS NULL ORDER BY LOWER(addonID) ASC"
 
 		cursor.execute(repo_table)
 		repo_table = cursor.fetchall()
-
-		choice = Dialogue.yesno(Addon_Title, '[COLOR %s]Check Repositories: [LIGHT](Blank Row)[CR][COLOR %s] > Add Blank row between each new line.[CR] > No Blank row between each new line.[/LIGHT][/COLOR][CR]Add a blank row between each new line ?[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM), yeslabel = ('[COLOR %s]Add Blank[/COLOR]' % TEXT_VALUE), nolabel = ('[COLOR %s]No Blank[/COLOR]' % TEXT_HIGHLIGHT))
-
-		if choice == 1:
-			add_blank = 'true'
-		else:
-			add_blank = 'false'
-
-		repo_table = str(repo_table).replace("[('","Status', 'Kodi Last Checked', 'Kodi Next Check', '\tVersion', 'Add-on ID'), ('").replace("')]","").replace("'), ('",("\n\n" if add_blank == 'true' else "\n")).replace("', '","     \t\t")
 
 		connection.commit()
 
@@ -110,6 +100,9 @@ def Check_Repositories():
 	ADDON.setSetting('repositories_not_working', str(not_working))
 	ADDON.setSetting('repositories_working', working)
 	Log(Log_Title + Repositories + '%s in %s database: %s working + %s not working' % (repository_count, addons_db, working, not_working), xbmc.LOGINFO)
+
+	blank = Add_Blank()
+	repo_table = str(repo_table).replace("[('","Status', 'Kodi Last Checked  ', 'Kodi Next Check    ', 'Version ', 'Add-on ID'), ('").replace("')]","").replace("'), ('",("\n\n" if blank == 'true' else "\n")).replace("', '","\t\t")
 	
 	if not_working == 0:
 		Dialogue.ok(Addon_Title, '[COLOR %s]Check Repositories: [LIGHT](Check Information)[CR][COLOR %s]No repository issues identified in %s database.[CR]All the repositories appear to be working.[/LIGHT][/COLOR][CR]Press OK for a list of all the repositories.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM, addons_db))
@@ -117,8 +110,8 @@ def Check_Repositories():
 		TextBox('[B]%s[/B][CR][COLOR %s]Repositories: [/COLOR][COLOR %s]%s[/COLOR]' % (Addon_Title, TEXT_ITEM, TEXT_VALUE, repository_count), Working_Text)
 
 	elif not_working != 0:
-		Repository_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: %s%s)[/LIGHT][/COLOR][CR][CR][COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join('REPOSITORIES NOT WORKING'), TEXT_VALUE, DATABASE, addons_db, TEXT_GENERAL, repo_table)
-		TextBox('[B]%s[/B][CR][COLOR %s]Repositories: [/COLOR][COLOR %s]%s  [/COLOR][COLOR %s][LIGHT]Not working: [/COLOR][COLOR %s]%s[/LIGHT][/COLOR]' % (Addon_Title, TEXT_ITEM, TEXT_VALUE, repository_count, TEXT_ITEM, TEXT_VALUE, not_working), Repository_Text)
+		Not_Working_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: %s%s)[/LIGHT][/COLOR][CR][CR][COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join('REPOSITORIES NOT WORKING'), TEXT_VALUE, DATABASE, addons_db, TEXT_GENERAL, repo_table)
+		TextBox('[B]%s[/B][CR][COLOR %s]Repositories: [/COLOR][COLOR %s]%s  [/COLOR][COLOR %s][LIGHT]Not working: [/COLOR][COLOR %s]%s[/LIGHT][/COLOR]' % (Addon_Title, TEXT_ITEM, TEXT_VALUE, repository_count, TEXT_ITEM, TEXT_VALUE, not_working), Not_Working_Text)
 		Dialogue.ok(Addon_Title, '[COLOR %s]Check Repositories: [LIGHT](Check Information)[CR][COLOR %s]Check My add-ons for updates. Select repository > versions.[CR]A new source for the repository may be needed.[/LIGHT][/COLOR][CR]Run at different times on different days before removing.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
 
 	Log(Log_Title + Repositories + '[COLOR %s][LIGHT]Finished (check repositories: %s%s)[/LIGHT][/COLOR]' % (TEXT_DARK, DATABASE, addons_db), xbmc.LOGINFO)
