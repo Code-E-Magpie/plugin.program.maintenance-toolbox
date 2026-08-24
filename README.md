@@ -60,12 +60,6 @@ Maintenance Toolbox functionality is simple and easy to use and will remain so.
 Maintenance Toolbox will be maintained for new releases of Kodi and changes to Python where possible.
 
 
-# Can you help ?
-There are a couple of ideas and niggles that may be possible to implement in the future.
-
-• Clear old thumbnails using settings to set number of days to retain.<br/>• Check Sources handles the situation where the certificate has expired but the link still works.<br/>• Consolidate Speedtest to single non executable file.
-
-
 # IMPORTANT
 Distribution of this add-on is NOT permitted.
 This add-on is exclusively distributed via the Magpie Repository and / or Code-E-Magpie on GitHub.
