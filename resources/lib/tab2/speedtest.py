@@ -26,7 +26,7 @@
 # ============================================================
 
 import xbmc, xbmcgui
-import csv, os
+import csv, os, urllib.parse
 
 from datetime import date, datetime, timedelta
 
@@ -38,8 +38,8 @@ from resources.lib.common.function import Addon_Title, Dialogue, Log, Log_Title,
 # ============================================================
 
 ADDON = configuration.ADDON
-SPEEDTEST_PNG = configuration.SPEEDTEST_PNG
-SPEEDTEST_TXT = configuration.SPEEDTEST_TXT
+ADDON_DATA_ID = configuration.ADDON_DATA_ID
+SPEEDTEST_TXT = os.path.join(ADDON_DATA_ID, 'speedtest.txt')
 TEXT_DARK = configuration.TEXT_DARK
 TEXT_GENERAL = configuration.TEXT_GENERAL
 TEXT_ITEM = configuration.TEXT_ITEM
@@ -135,13 +135,25 @@ def Speedtest_Ookla():
 # ============================================================
 
 def Speedtest_Report():
+	
+	ID, SPONSOR, NAME, TIMESTAMP, DATA, PING, DOWNLOAD, UPLOAD, URL, IP = Data_Speedtest()
+	
+	# extract the filename from the URL
+	parsed = urllib.parse.urlparse(URL)
+	basename = os.path.basename(parsed.path) # e.g. "18386195535.png"
 
-	if os.path.isfile(SPEEDTEST_PNG):
+	# ensure basename looks ok and has a .png extension; otherwise fallback
+	if not basename or not basename.lower().endswith('.png'):
+		basename = 'speedtest.png'
+	else:
+		basename = 'speedtest_' + basename
+
+	speedtest_png = os.path.join(ADDON_DATA_ID, basename)
+
+	if os.path.isfile(speedtest_png):
 		speedtest_report = xbmcgui.WindowDialog()
-
-		speedtest_report.addControl(xbmcgui.ControlImage(265, 200, 750, 400, SPEEDTEST_PNG))
-
+		speedtest_report.addControl(xbmcgui.ControlImage(265, 200, 750, 400, speedtest_png))
 		speedtest_report.doModal()
-		
+	
 	else:
 		Notification(Addon_Title, '[COLOR %s]Speedtest by Ookla Report: unavailable / run Speedtest by Ookla  	[/COLOR]' % TEXT_GENERAL)

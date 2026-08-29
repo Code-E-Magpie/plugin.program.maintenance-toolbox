@@ -67,7 +67,6 @@ TEXT_ITEM = configuration.TEXT_ITEM
 TEXT_VALUE = configuration.TEXT_VALUE
 URL_ATTEMPTS = int(ADDON.getSetting('URL_ATTEMPTS'))
 URL_DELAY = int(ADDON.getSetting('URL_DELAY'))
-USER_AGENT = configuration.USER_AGENT
 
 # ============================================================
 # Sources
@@ -90,7 +89,7 @@ def Check_URL_Status(URL_path):
 
 		try:
 			request = urllib.request.Request(URL_path)
-			request.add_header('User-Agent', USER_AGENT)
+			request.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3')
 			response = urllib.request.urlopen(request)
 			response.close()
 			URL_status = True

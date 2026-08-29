@@ -25,9 +25,9 @@
 # ============================================================
 
 import xbmc, xbmcaddon, xbmcgui, xbmcvfs
-import csv, datetime, errno, math, os, platform, re, requests, signal, socket, sys, threading, time, timeit
+import csv, datetime, errno, math, os, platform, re, requests, signal, socket, sys, threading, time, timeit, urllib.parse, xml.parsers.expat
 
-import xml.parsers.expat
+from pathlib import Path
 
 try:
 	import gzip
@@ -1737,33 +1737,75 @@ def shell():
 		Dialogue.ok(Addon_Title, '[COLOR %s]Speedtest by Ookla: [LIGHT](Summary)[/LIGHT][CR][COLOR %s] > Download: [/COLOR][COLOR %s]%0.2f M%s/s[/COLOR][CR][COLOR %s] > Upload: [/COLOR][COLOR %s]%0.2f M%s/s[/COLOR][CR][COLOR %s] > Ping: [/COLOR][COLOR %s]%0.2f ms[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM, TEXT_VALUE, (results.download / 1000.0 / 1000.0) / args.units[1], args.units[0], TEXT_ITEM, TEXT_VALUE, (results.upload / 1000.0 / 1000.0) / args.units[1], args.units[0], TEXT_ITEM, TEXT_VALUE, (round(float(results.ping), 2))))
 		Log(Log_Title + Speedtest + 'Download: %0.2f M%s/s  |  Upload: %0.2f M%s/s  |  Ping: %0.2f ms' % ((results.download / 1000.0 / 1000.0) / args.units[1], args.units[0], (results.upload / 1000.0 / 1000.0) / args.units[1], args.units[0], results.ping), xbmc.LOGINFO)
 
-		try:
-			with open((os.path.join(ADDON_DATA_MT, 'speedtest.txt')), 'w') as file:
-				file.write('%s > speedtest\n\nCreated: %s\n\nSource image: %s\n' % (ADDON_NAME, (datetime.datetime.utcnow()).strftime('%Y-%m-%d %H:%M:%S'), results.share())) # e.g. http://www.speedtest.net/result/18386195535.png
-				file.write('Output file: %s\n\nDownload: %0.2f M%s/s\nUpload: %0.2f M%s/s\nPing: %0.2f ms\n\n' % ((os.path.join(os.path.dirname(__file__), 'speedtest.txt')), (results.download / 1000.0 / 1000.0) / args.units[1], args.units[0], (results.upload / 1000.0 / 1000.0) / args.units[1], args.units[0], results.ping))
-				file.write('%s\n\n' % results.csv()) # single string without labels
-				file.write('%s' % results.json()) # full results
+	try:
+		with open(os.path.join(ADDON_DATA_MT, 'speedtest.txt'), 'w') as file:
+			file.write('%s > speedtest\n\nCreated: %s\n\nSource image: %s\n' % (ADDON_NAME, datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'), results.share())) # e.g. http://www.speedtest.net/result/18386195535.png
+			file.write('Output file: %s\n\nDownload: %0.2f M%s/s\nUpload: %0.2f M%s/s\nPing: %0.2f ms\n\n' % (os.path.join(os.path.dirname(__file__), 'speedtest.txt'), (results.download / 1000.0 / 1000.0) / args.units[1], args.units[0], (results.upload / 1000.0 / 1000.0) / args.units[1], args.units[0], results.ping))
+			file.write('%s\n\n' % results.csv()) # single string without labels
+			file.write('%s' % results.json()) # full results
 
-		except IOError as e:
-			Log(Log_Title + Speedtest + '%s' % str(e), xbmc.LOGERROR)
+	except IOError as e:
+		Log(Log_Title + Speedtest + '%s' % str(e), xbmc.LOGERROR)
 
-		printer(prefix + 'Share results: %s' % results.share())
-		image = "%s"  % results.share()
-		
-		response = requests.get(image)
+	printer(prefix + 'Share results: %s' % results.share())
+	image_url = results.share()  # remote URL
 
-		with open((os.path.join(ADDON_DATA_MT, 'speedtest.png')), 'wb') as file:
-			file.write(response.content)
+	# download the image and save it using the filename from the URL
+	try:
+		response = requests.get(image_url, timeout = 10, allow_redirects = True)
+		response.raise_for_status()
 
-		return image
+	except requests.RequestException as e:
+		Log(Log_Title + Speedtest + 'Failed to download image: %s' % str(e), xbmc.LOGERROR)
+		raise
+
+	# extract the filename from the URL
+	parsed = urllib.parse.urlparse(image_url)
+	basename = os.path.basename(parsed.path) # e.g. "18386195535.png"
+
+	# ensure basename looks ok and has a .png extension; otherwise fallback
+	if not basename or not basename.lower().endswith('.png'):
+		basename = 'speedtest.png'
+	else:
+		basename = 'speedtest_' + basename
+
+	speedtest_png = os.path.join(ADDON_DATA_MT, basename)
+
+	try:
+		data_dir = Path(ADDON_DATA_MT)
+	# files starting with "speedtest" and ending with ".png"
+		for old in data_dir.glob('speedtest*.png'):
+			try:
+				old.unlink()
+				print("deleted previous file:", str(old))
+			except Exception as del_exc:
+				Log(Log_Title + Speedtest + 'Failed to delete old image %s: %s' % (str(old), str(del_exc)), xbmc.LOGWARNING)
+
+	except Exception as e:
+		Log(Log_Title + Speedtest + 'Error while cleaning old images: %s' % str(e), xbmc.LOGWARNING)
+
+	# write image using streaming to avoid large memory usage
+	with open(speedtest_png, 'wb') as file:
+		for chunk in response.iter_content(chunk_size = 8192):
+			if chunk:
+				file.write(chunk)
+
+	# ensure image has bytes
+	if not os.path.exists(speedtest_png) or os.path.getsize(speedtest_png) == 0:
+		raise IOError("Downloaded image is empty: %s" % speedtest_png)
+
+	print("wrote:", speedtest_png, "size:", os.path.getsize(speedtest_png))
+
+	# return image path so the saved image is used
+	return speedtest_png
 
 # ============================================================
 # CLASS: PopupWindow (Speedtest by Ookla full report)
 # ============================================================
 
 class PopupWindow(xbmcgui.WindowDialog):
-	def __init__(self, image):
-		self.addControl(xbmcgui.ControlImage(320, 400, 640, 295, image))
+	def __init__(self, image_path):
+		self.addControl(xbmcgui.ControlImage(320, 400, 640, 295, image_path))
 
 # ============================================================
 # FUNCTION: main
@@ -1771,12 +1813,11 @@ class PopupWindow(xbmcgui.WindowDialog):
 
 def main():
 	try:
-		image = shell()
+		image_path = shell()
 
-		window = PopupWindow(image)
+		window = PopupWindow(image_path)
 		window.show()
 		time.sleep(15)
-
 		window.close()
 		del window
 
@@ -1784,6 +1825,7 @@ def main():
 
 	except KeyboardInterrupt:
 		printer(prefix + '\nCancelling...', error = True)
+
 	except (SpeedtestException, SystemExit):
 		e = get_exception()
 

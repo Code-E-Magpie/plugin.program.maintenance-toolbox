@@ -11,7 +11,6 @@
 # development:
 #	- new configuration using single data source (original dual source failed testing)
 #	- user interface indicates when internet.py file needs updating i.e. when internet is connected but no data returned
-#	- added notification when network "Not connected"
 #	- functions consolidated to plugin.program.maintenance-toolbox > resources > lib > common > function.py
 #	- variables consolidated to plugin.program.maintenance-toolbox > resources > lib > common > configuration.py
 #	- code debugged and reengineered if required using https://aipy.dev/tools
@@ -43,7 +42,6 @@ from resources.lib.common.function import Addon_Title, Log, Log_Title, Notificat
 ADDON_DATA = configuration.ADDON_DATA
 API = 'http://ip-api.com/json'
 TEXT_GENERAL = configuration.TEXT_GENERAL
-USER_AGENT = configuration.USER_AGENT
 
 # ============================================================
 # Internet
@@ -81,7 +79,7 @@ def Data_Internet():
 
 	try:
 		request = urllib.request.Request(API)
-		request.add_header('User-Agent', USER_AGENT)
+		request.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3')
 		with urllib.request.urlopen(request) as response:
 			response = json.load(response)
 
