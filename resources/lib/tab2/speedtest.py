@@ -84,7 +84,7 @@ def Data_Speedtest():
 			return (ID, SPONSOR, NAME, TIMESTAMP, DATA, PING, DOWNLOAD, UPLOAD, URL, IP)
 
 	except FileNotFoundError:
-		Log(Log_Title + Speedtest + 'Data Speedtest: speedtest.txt file not found', xbmc.LOGERROR)
+		Log(Log_Title + Speedtest + 'Data Speedtest: speedtest.txt not found', xbmc.LOGERROR)
 
 		return None, None, None, None, 0, 0, 0, 0, None, None
 
@@ -151,9 +151,15 @@ def Speedtest_Report():
 	speedtest_png = os.path.join(ADDON_DATA_ID, basename)
 
 	if os.path.isfile(speedtest_png):
-		speedtest_report = xbmcgui.WindowDialog()
-		speedtest_report.addControl(xbmcgui.ControlImage(265, 200, 750, 400, speedtest_png))
-		speedtest_report.doModal()
-	
+		try:
+			speedtest_report = xbmcgui.WindowDialog()
+			speedtest_report.addControl(xbmcgui.ControlImage(265, 200, 750, 400, speedtest_png))
+			speedtest_report.doModal()
+
+		except Exception as e:
+			Log(Log_Title + Speedtest + '[COLOR %s]Speedtest Reportby Ookla: failed to display image[CR] %s[/COLOR]' % (TEXT_GENERAL, str(e)), xbmc.LOGERROR)
+			Notification(Addon_Title, '[COLOR %s]Speedtest by Ookla Report: failed to display image[/COLOR]' % TEXT_GENERAL)
+
 	else:
 		Notification(Addon_Title, '[COLOR %s]Speedtest by Ookla Report: unavailable / run Speedtest by Ookla  	[/COLOR]' % TEXT_GENERAL)
+		Log(Log_Title + Speedtest + 'Speedtest by Ookla Report: speedtest.png not found', xbmc.LOGINFO)
