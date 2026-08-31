@@ -6,7 +6,7 @@
 
 # sourced from: plugin.program.aliundek19gui.maintenance.wizardz > wizard.py
 # location: plugin.program.maintenance-toolbox > resources > lib > tab2 > internet.py
-# type: data source
+# type: connection
 # functionality: API (Application Programming Interface) internet information e.g. ISP, external IP address etc.
 # development:
 #	- new configuration using single data source (original dual source failed testing)
@@ -27,10 +27,9 @@
 # ============================================================
 
 import xbmc
-import json, os
+import json, os, urllib.request
 
 from urllib.error import URLError, HTTPError
-import urllib.request
 
 from resources.lib.common.configuration import configuration
 from resources.lib.common.function import Addon_Title, Log, Log_Title, Notification
@@ -70,11 +69,14 @@ def writejson(data):
 
 def Data_Internet():
 
-	NETWORK_STATE = xbmc.getInfoLabel('Network.LinkState').replace('Link: ', '')
-	network_state = NETWORK_STATE
+	network_state = xbmc.getInfoLabel('Network.LinkState').replace('Link: ', '')
 	if network_state == 'Not connected':
-		Notification(Addon_Title, '[COLOR %s]Show Internet Information: check network / refresh tab & try again[/COLOR]' % TEXT_GENERAL)
+		Notification(Addon_Title, '[COLOR %s]Show Internet Information: refresh tab / check network[/COLOR]' % TEXT_GENERAL)
+		return None, None, None, None, None, None, None, None, None
 
+	internet_state = str(xbmc.getInfoLabel('System.InternetState')).replace('. Check network settings.','')
+	if internet_state != 'Connected':
+		Notification(Addon_Title, '[COLOR %s]Show Internet Information: refresh tab / check internet[/COLOR]' % TEXT_GENERAL)
 		return None, None, None, None, None, None, None, None, None
 
 	try:

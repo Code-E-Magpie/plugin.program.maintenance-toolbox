@@ -27,15 +27,13 @@
 # ============================================================
 
 import xbmc, xbmcgui
-import os, re
+import html.parser, os, re, urllib.error, urllib.parse, urllib.request
 
 from datetime import date, datetime, timedelta
+from sqlite3 import dbapi2 as database
 
 from resources.lib.common.configuration import configuration
 from resources.lib.common.function import Addon_Title, Dialogue, DialogueProgress, Log, Log_Title, Notification, Now
-
-import html.parser, urllib.error, urllib.parse, urllib.request
-from sqlite3 import dbapi2 as database
 
 try:
 	from urllib.request import urlopen, Request
@@ -113,16 +111,14 @@ def Check_Sources():
 		Notification(Addon_Title, '[COLOR %s]Check Sources: no sources.xml[/COLOR]' % TEXT_GENERAL)
 		return False
 
-	NETWORK_STATE = xbmc.getInfoLabel('Network.LinkState').replace('Link: ', '')
-	network_state = NETWORK_STATE
+	network_state = xbmc.getInfoLabel('Network.LinkState').replace('Link: ', '')
 	if network_state == 'Not connected':
-		Notification(Addon_Title, '[COLOR %s]Check Sources: check network / refresh tab & try again[/COLOR]' % TEXT_GENERAL)
+		Notification(Addon_Title, '[COLOR %s]Check Sources: try again / refresh tab / check network[/COLOR]' % TEXT_GENERAL)
 		return False
 
-	INTERNET_STATE = xbmc.getInfoLabel('System.InternetState')	
-	internet_state = str(INTERNET_STATE).replace('. Check network settings.','')
+	internet_state = str(xbmc.getInfoLabel('System.InternetState')).replace('. Check network settings.','')
 	if internet_state != 'Connected':
-		Notification(Addon_Title, '[COLOR %s]Check Sources: check internet / refresh tab & try again[/COLOR]' % TEXT_GENERAL)
+		Notification(Addon_Title, '[COLOR %s]Check Sources: try again / refresh tab / check internet[/COLOR]' % TEXT_GENERAL)
 		return False
 
 	Dialogue.ok(Addon_Title, '[COLOR %s]Check Sources: [LIGHT](User Information)[CR][COLOR %s]Storage locations will be retained but not displayed.[CR]The format of source names will be retained and displayed.[/LIGHT][CR][/COLOR]e.g.[COLOR %s] × Official :[/COLOR][COLOR %s] Kodi Add-on repository[/COLOR][COLOR %s][I] (official kodi.tv mirror)[/I][/COLOR][/COLOR]' % (TEXT_GENERAL, TEXT_ITEM, TEXT_DARK, TEXT_ITEM, TEXT_DIM))

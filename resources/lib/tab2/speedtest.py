@@ -104,16 +104,14 @@ def Data_Speedtest():
 
 def Speedtest_Ookla():
 
-	NETWORK_STATE = xbmc.getInfoLabel('Network.LinkState').replace('Link: ', '')
-	network_state = NETWORK_STATE
+	network_state = xbmc.getInfoLabel('Network.LinkState').replace('Link: ', '')
 	if network_state == 'Not connected':
-		Notification(Addon_Title, '[COLOR %s]Speedtest by Ookla: check network / refresh tab & try again[/COLOR]' % TEXT_GENERAL)
+		Notification(Addon_Title, '[COLOR %s]Speedtest by Ookla: try again / refresh tab / check network[/COLOR]' % TEXT_GENERAL)
 		return False
 
-	INTERNET_STATE = xbmc.getInfoLabel('System.InternetState')
-	internet_state = str(INTERNET_STATE).replace('. Check network settings.','')
+	internet_state = str(xbmc.getInfoLabel('System.InternetState')).replace('. Check network settings.','')
 	if internet_state != 'Connected':
-		Notification(Addon_Title, '[COLOR %s]Speedtest by Ookla: check network / refresh tab & try again[/COLOR]' % TEXT_GENERAL)
+		Notification(Addon_Title, '[COLOR %s]Speedtest by Ookla: try again / refresh tab / check internet[/COLOR]' % TEXT_GENERAL)
 		return False
 
 	try:
