@@ -68,7 +68,7 @@ def Addon_Data_Backup():
 			if os.path.exists(ADDON_DATA):
 				shutil.copytree(ADDON_DATA, ADDON_DATA_FOLDER)
 
-				ADDON.setSetting('addon_data_backup_saved', Now())
+				ADDON.setSetting('addon_data_backup_save', Now())
 				List_Folders(ADDON_DATA, ADDON_DATA_LIST)
 
 				Notification(Addon_Title, '[COLOR %s]Backup Add-on Data: backup saved[/COLOR]' % TEXT_GENERAL)

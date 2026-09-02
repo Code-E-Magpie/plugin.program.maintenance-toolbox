@@ -70,7 +70,7 @@ def Addons_Backup():
 			if os.path.exists(ADDONS):
 				shutil.copytree(ADDONS, ADDONS_FOLDER)
 
-				ADDON.setSetting('addons_backup_saved', Now())
+				ADDON.setSetting('addons_backup_save', Now())
 				List_Folders(ADDONS, ADDONS_LIST)
 				List_Folders(XBMCBINADDONS, XBMCBINADDONS_LIST)
 				

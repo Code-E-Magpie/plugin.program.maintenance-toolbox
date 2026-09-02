@@ -74,7 +74,7 @@ def Userdata_Backup():
 				else:
 					shutil.copy2(source_folder, destination_folder)
 
-			ADDON.setSetting('userdata_backup_saved', Now())
+			ADDON.setSetting('userdata_backup_save', Now())
 			List_Files(USERDATA, USERDATA_LIST)
 
 			Notification(Addon_Title, '[COLOR %s]Backup Userdata: backup saved[/COLOR]' % TEXT_GENERAL)

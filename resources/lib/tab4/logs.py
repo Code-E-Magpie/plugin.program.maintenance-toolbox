@@ -70,7 +70,7 @@ def Logs_Backup():
 					destination_file = os.path.join(LOGS_FOLDER, item)
 					shutil.copy(source_file, destination_file)
 
-					ADDON.setSetting('logs_backup_saved', Now())
+					ADDON.setSetting('logs_backup_save', Now())
 					List_Logs(LOGPATH, LOGS_LIST)
 
 					Notification(Addon_Title, '[COLOR %s]Backup Logs: backup saved[/COLOR]' % TEXT_GENERAL)
