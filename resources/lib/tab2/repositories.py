@@ -96,9 +96,9 @@ def Check_Repositories():
 		except UnboundLocalError as e:
 			Log(Log_Title + Repositories + '%s connection error: %s' % (addons_db, str(e)), xbmc.LOGERROR)
 
-	ADDON.setSetting('repositories_last_checked', Now())
-	ADDON.setSetting('repositories_not_working', str(not_working))
-	ADDON.setSetting('repositories_working', working)
+	ADDON.setSetting('repositories_last_check', Now())
+	ADDON.setSetting('repositories_not_work', str(not_working))
+	ADDON.setSetting('repositories_work', working)
 	Log(Log_Title + Repositories + '%s in %s database: %s working + %s not working' % (repository_count, addons_db, working, not_working), xbmc.LOGINFO)
 
 	blank = Add_Blank()

@@ -117,7 +117,7 @@ def Speedtest_Ookla():
 	try:
 		Dialogue.ok(Addon_Title, '[COLOR %s]Speedtest by Ookla: [LIGHT](User Information)[CR][COLOR %s][LIGHT]The next dialogue box shows the test running.[CR]The summary will follow the download figure.[/LIGHT][/COLOR][CR]Press summary OK for Speedtest Report.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
 		Log(Log_Title + Speedtest + '[COLOR %s][LIGHT]Started (Speedtest by Ookla)[/LIGHT][/COLOR]' % TEXT_DARK, xbmc.LOGINFO)
-		ADDON.setSetting('speedtest_last_checked', Now())
+		ADDON.setSetting('speedtest_last_check', Now())
 
 		xbmc.executebuiltin('RunScript("special://home/addons/plugin.program.maintenance-toolbox/resources/lib/tab2/speedtest_ookla.py")')
 

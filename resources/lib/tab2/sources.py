@@ -63,8 +63,8 @@ TEXT_GENERAL = configuration.TEXT_GENERAL
 TEXT_HIGHLIGHT = configuration.TEXT_HIGHLIGHT
 TEXT_ITEM = configuration.TEXT_ITEM
 TEXT_VALUE = configuration.TEXT_VALUE
-URL_ATTEMPTS = int(ADDON.getSetting('URL_ATTEMPTS'))
-URL_DELAY = int(ADDON.getSetting('URL_DELAY'))
+URL_ATTEMPTS = int(ADDON.getSetting('url_attempts'))
+URL_DELAY = int(ADDON.getSetting('url_delay'))
 
 # ============================================================
 # Sources
@@ -201,23 +201,23 @@ def Check_Sources():
 
 			Dialogue.ok(Addon_Title, '[COLOR %s]Check Sources: [LIGHT](Final Summary)[/LIGHT][CR][COLOR %s] > Sources in xml file: [/COLOR][COLOR %s]%s[/COLOR][COLOR %s]	=  %s http + %s other[/COLOR][CR][COLOR %s] > Working: [/COLOR][COLOR %s]%s[/COLOR][COLOR %s]			=  %s http + %s other[/COLOR][CR][COLOR %s] > Not working: [/COLOR][COLOR %s]%s[/COLOR][COLOR %s]		=  %s http[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM, TEXT_VALUE, (sources_count - removed_count), TEXT_DIM, (http_count - removed_count), other, TEXT_ITEM, TEXT_VALUE, working, TEXT_DIM, http_working, other, TEXT_ITEM, TEXT_VALUE, (not_working - removed_count), TEXT_DIM, (not_working - removed_count)))
 			Log(Log_Title + Sources + '%s in file: %s working (%s http + %s other) + %s not working (%s http)' % ((sources_count - removed_count), working, http_working, other, (not_working - removed_count),  (not_working - removed_count)), xbmc.LOGINFO)
-			ADDON.setSetting('sources_last_checked', Now())
-			ADDON.setSetting('sources_not_working', (str(not_working - removed_count)))
-			ADDON.setSetting('sources_working', (str(working)))
+			ADDON.setSetting('sources_last_check', Now())
+			ADDON.setSetting('sources_not_work', (str(not_working - removed_count)))
+			ADDON.setSetting('sources_work', (str(working)))
 
 		else:
 			Notification(Addon_Title, '[COLOR %s]Check Sources: %s sources (all working)  [/COLOR]' % (TEXT_GENERAL, sources_count))
 			Log(Log_Title + Sources + 'Check Sources: %s sources (all working: %s http + %s other)' % (sources_count, http_working, other), xbmc.LOGINFO)
-			ADDON.setSetting('sources_last_checked', Now())
-			ADDON.setSetting('sources_not_working', '0')
-			ADDON.setSetting('sources_working', str(sources_count))
+			ADDON.setSetting('sources_last_check', Now())
+			ADDON.setSetting('sources_not_work', '0')
+			ADDON.setSetting('sources_work', str(sources_count))
 
 	else:
 		Notification(Addon_Title, '[COLOR %s]Check Sources: no sources in file[/COLOR]' % TEXT_GENERAL)
 		Log(Log_Title + Sources + 'Check Sources: no sources in file', xbmc.LOGINFO)
-		ADDON.setSetting('sources_last_checked', Now())
-		ADDON.setSetting('sources_not_working', '0')
-		ADDON.setSetting('sources_working', '0')
+		ADDON.setSetting('sources_last_check', Now())
+		ADDON.setSetting('sources_not_work', '0')
+		ADDON.setSetting('sources_work', '0')
 
 	try:
 		with open(SOURCES_TXT, "w") as file:
