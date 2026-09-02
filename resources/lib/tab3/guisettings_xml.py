@@ -64,7 +64,7 @@ def Guisettings_Backup():
 	if os.path.exists(GUISETTINGS):
 		shutil.copy(GUISETTINGS, GUISETTINGS_FOLDER)
 
-		ADDON.setSetting('guisettings_backup_saved', Now())
+		ADDON.setSetting('guisettings_backup_save', Now())
 
 		Notification(Addon_Title, '[COLOR %s]Backup GUI Settings: backup saved[/COLOR]' % TEXT_GENERAL)
 		Log(Log_Title + Guisettings + 'Backup GUI Settings: backup saved', xbmc.LOGINFO)

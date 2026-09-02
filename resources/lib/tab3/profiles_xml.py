@@ -64,7 +64,7 @@ def Profiles_Backup():
 	if os.path.exists(PROFILES):
 		shutil.copy(PROFILES, PROFILES_FOLDER)
 
-		ADDON.setSetting('profiles_backup_saved', Now())
+		ADDON.setSetting('profiles_backup_save', Now())
 
 		Notification(Addon_Title, '[COLOR %s]Backup Profiles: backup saved[/COLOR]' % TEXT_GENERAL)
 		Log(Log_Title + Profiles + 'Backup Profiles: backup saved', xbmc.LOGINFO)

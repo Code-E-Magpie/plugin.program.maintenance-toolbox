@@ -64,7 +64,7 @@ def Favourites_Backup():
 	if os.path.exists(FAVOURITES):
 		shutil.copy(FAVOURITES, FAVOURITES_FOLDER)
 
-		ADDON.setSetting('favourites_backup_saved', Now())
+		ADDON.setSetting('favourites_backup_save', Now())
 
 		Notification(Addon_Title, '[COLOR %s]Backup Favourites: backup saved[/COLOR]' % TEXT_GENERAL)
 		Log(Log_Title + Favourites + 'Backup Favourites: backup saved', xbmc.LOGINFO)

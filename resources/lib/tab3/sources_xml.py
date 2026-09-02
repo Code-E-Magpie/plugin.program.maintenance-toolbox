@@ -64,7 +64,7 @@ def Sources_Backup():
 	if os.path.exists(SOURCES):
 		shutil.copy(SOURCES, SOURCES_FOLDER)
 
-		ADDON.setSetting('sources_backup_saved', Now())
+		ADDON.setSetting('sources_backup_save', Now())
 
 		Notification(Addon_Title, '[COLOR %s]Backup Sources: backup saved[/COLOR]' % TEXT_GENERAL)
 		Log(Log_Title + Sources + 'Backup Sources: backup saved', xbmc.LOGINFO)
