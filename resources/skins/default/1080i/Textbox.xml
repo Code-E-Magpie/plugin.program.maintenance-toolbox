@@ -71,7 +71,6 @@
             <height>970</height>
             <orientation>vertical</orientation>
             <showonepage>true</showonepage>
-            <subtype>text</subtype>
             <texturesliderbackground>scrollbar-V-background.png</texturesliderbackground>
             <texturesliderbar>scrollbar-V.png</texturesliderbar>
             <texturesliderbarfocus colordiffuse="FFFFFF00">scrollbar-V-focus.png</texturesliderbarfocus>
