@@ -10,7 +10,6 @@
 # functionality: skin
 #	- classes for defining the appearance of PyXBMCt Windows and Controls
 # development:
-#	- file content formatted
 #	- functions consolidated to plugin.program.maintenance-toolbox > resources > lib > common > function.py
 #	- variables consolidated to plugin.program.maintenance-toolbox > resources > lib > common > configuration.py
 #	- code debugged and reengineered if required using https://aipy.dev/tools
