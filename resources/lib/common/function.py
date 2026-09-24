@@ -66,9 +66,9 @@ Log_Title = ('[COLOR %s]%s [/COLOR]' % (TEXT_ADDON, ADDON_NAME))
 
 def Add_Blank():
 
-	choice = Dialogue.yesno(Addon_Title, '[COLOR %s]Common Function: [LIGHT](Add Blank)[CR][COLOR %s] > Add Blank row between each new line.[CR] > No Blank row between each new line.[/LIGHT][/COLOR][CR]Add a blank row between each new line ?[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM), yeslabel = ('[COLOR %s]Add Blank[/COLOR]' % TEXT_VALUE), nolabel = ('[COLOR %s]No Blank[/COLOR]' % TEXT_HIGHLIGHT), defaultbutton = 0)
+	choice = Dialogue.yesno(Addon_Title, '[COLOR %s]Common Function: [LIGHT](Add Blank)[CR][COLOR %s] > Add Blank row between each new line.[CR] > No Blank row between each new line.[/LIGHT][/COLOR][CR]Add a blank row between each new line ?[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM), yeslabel = ('[COLOR %s]No Blank[/COLOR]' % TEXT_VALUE), nolabel = ('[COLOR %s]Add Blank[/COLOR]' % TEXT_HIGHLIGHT))
 
-	if choice == 1:
+	if choice == 0:
 		blank = 'true'
 	else:
 		blank = 'false'
