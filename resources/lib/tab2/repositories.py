@@ -56,7 +56,10 @@ def Check_Repositories():
 
 	Dialogue.ok(Addon_Title, '[COLOR %s]Check Repositories: [LIGHT](Check Information)[CR][COLOR %s]Repositories may not work due to internet connectivity issues;[CR]or the host server being unavailable (maintenance etc.)[/LIGHT][/COLOR][CR]Run at different times on different days before removing.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
 
-	Log(Log_Title + Repositories + '[COLOR %s][LIGHT]Started (check repositories: %s%s)[/LIGHT][/COLOR]' % (TEXT_DARK, DATABASE, addons_db), xbmc.LOGINFO)
+	Log(Log_Title + Repositories + '[COLOR %s][LIGHT]Started (check repositories: //%s%s)[/LIGHT][/COLOR]' % (TEXT_DARK, DATABASE, addons_db), xbmc.LOGINFO)
+
+	connection = None
+	cursor = None
 
 	try:
 		connection = sqlite3.connect(os.path.join(DATABASE, addons_db))
@@ -90,8 +93,15 @@ def Check_Repositories():
 
 	finally:
 		try:
+			if cursor:
+				cursor.close()
+		except Exception:
+			pass
+		try:
 			if connection:
 				connection.close()
+		except Exception:
+			pass
 
 		except UnboundLocalError as e:
 			Log(Log_Title + Repositories + '%s connection error: %s' % (addons_db, str(e)), xbmc.LOGERROR)
@@ -99,7 +109,7 @@ def Check_Repositories():
 	ADDON.setSetting('repositories_last_check', Now())
 	ADDON.setSetting('repositories_not_work', str(not_working))
 	ADDON.setSetting('repositories_work', working)
-	Log(Log_Title + Repositories + '%s in %s database: %s working + %s not working' % (repository_count, addons_db, working, not_working), xbmc.LOGINFO)
+	Log(Log_Title + Repositories + 'Check Repositories: %s [LIGHT](working %s  not working %s)[/LIGHT]' % (repository_count, working, not_working), xbmc.LOGINFO)
 
 	blank = Add_Blank()
 	repo_table = str(repo_table).replace("[('","Status', 'Kodi Last Checked  ', 'Kodi Next Check    ', 'Version ', 'Add-on ID'), ('").replace("')]","").replace("'), ('",("\n\n" if blank == 'true' else "\n")).replace("', '","\t\t")
@@ -114,4 +124,4 @@ def Check_Repositories():
 		TextBox('[B]%s[/B][CR][COLOR %s]Repositories: [/COLOR][COLOR %s]%s  [/COLOR][COLOR %s][LIGHT]Not working: [/COLOR][COLOR %s]%s[/LIGHT][/COLOR]' % (Addon_Title, TEXT_ITEM, TEXT_VALUE, repository_count, TEXT_ITEM, TEXT_VALUE, not_working), Not_Working_Text)
 		Dialogue.ok(Addon_Title, '[COLOR %s]Check Repositories: [LIGHT](Check Information)[CR][COLOR %s]Check My add-ons for updates. Select repository > versions.[CR]A new source for the repository may be needed.[/LIGHT][/COLOR][CR]Run at different times on different days before removing.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))
 
-	Log(Log_Title + Repositories + '[COLOR %s][LIGHT]Finished (check repositories: %s%s)[/LIGHT][/COLOR]' % (TEXT_DARK, DATABASE, addons_db), xbmc.LOGINFO)
+	Log(Log_Title + Repositories + '[COLOR %s][LIGHT]Finished (check repositories: //%s%s)[/LIGHT][/COLOR]' % (TEXT_DARK, DATABASE, addons_db), xbmc.LOGINFO)

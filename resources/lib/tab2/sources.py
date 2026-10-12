@@ -9,9 +9,6 @@
 # type: connection
 # functionality: check sources excluding storage locations
 # development:
-#	- last checked date and totals captured using ADDON.setSetting
-#	- formatting of source name retained in notifications and dialogue boxes (colour, bold etc.)
-#	- connection error handling added when network is "Not connected" or internet not "Connected"
 #	- functions consolidated to plugin.program.maintenance-toolbox > resources > lib > common > function.py
 #	- variables consolidated to plugin.program.maintenance-toolbox > resources > lib > common > configuration.py
 #	- code debugged and reengineered if required using https://aipy.dev/tools
@@ -122,7 +119,7 @@ def Check_Sources():
 		return False
 
 	Dialogue.ok(Addon_Title, '[COLOR %s]Check Sources: [LIGHT](User Information)[CR][COLOR %s]Storage locations will be retained but not displayed.[CR]The format of source names will be retained and displayed.[/LIGHT][CR][/COLOR]e.g.[COLOR %s] × Official :[/COLOR][COLOR %s] Kodi Add-on repository[/COLOR][COLOR %s][I] (official kodi.tv mirror)[/I][/COLOR][/COLOR]' % (TEXT_GENERAL, TEXT_ITEM, TEXT_DARK, TEXT_ITEM, TEXT_DIM))
-	Log(Log_Title + Sources + '[COLOR %s][LIGHT]Started (check sources: special://userdata/sources.xml)[/LIGHT][/COLOR]' % TEXT_DARK, xbmc.LOGINFO)
+	Log(Log_Title + Sources + '[COLOR %s][LIGHT]Started (check sources: //userdata/sources.xml)[/LIGHT][/COLOR]' % TEXT_DARK, xbmc.LOGINFO)
 
 	sources = 0
 	broken = []
@@ -200,14 +197,14 @@ def Check_Sources():
 				Log(Log_Title + Sources + 'Check Sources: all sources kept', xbmc.LOGINFO)
 
 			Dialogue.ok(Addon_Title, '[COLOR %s]Check Sources: [LIGHT](Final Summary)[/LIGHT][CR][COLOR %s] > Sources in xml file: [/COLOR][COLOR %s]%s[/COLOR][COLOR %s]	=  %s http + %s other[/COLOR][CR][COLOR %s] > Working: [/COLOR][COLOR %s]%s[/COLOR][COLOR %s]			=  %s http + %s other[/COLOR][CR][COLOR %s] > Not working: [/COLOR][COLOR %s]%s[/COLOR][COLOR %s]		=  %s http[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM, TEXT_VALUE, (sources_count - removed_count), TEXT_DIM, (http_count - removed_count), other, TEXT_ITEM, TEXT_VALUE, working, TEXT_DIM, http_working, other, TEXT_ITEM, TEXT_VALUE, (not_working - removed_count), TEXT_DIM, (not_working - removed_count)))
-			Log(Log_Title + Sources + '%s in file: %s working (%s http + %s other) + %s not working (%s http)' % ((sources_count - removed_count), working, http_working, other, (not_working - removed_count),  (not_working - removed_count)), xbmc.LOGINFO)
+			Log(Log_Title + Sources + 'Check Sources: %s [LIGHT](working %s  http %s + other %s  not working %s  http %s)[/LIGHT]' % ((sources_count - removed_count), working, http_working, other, (not_working - removed_count),  (not_working - removed_count)), xbmc.LOGINFO)
 			ADDON.setSetting('sources_last_check', Now())
 			ADDON.setSetting('sources_not_work', (str(not_working - removed_count)))
 			ADDON.setSetting('sources_work', (str(working)))
 
 		else:
 			Notification(Addon_Title, '[COLOR %s]Check Sources: %s sources (all working)  [/COLOR]' % (TEXT_GENERAL, sources_count))
-			Log(Log_Title + Sources + 'Check Sources: %s sources (all working: %s http + %s other)' % (sources_count, http_working, other), xbmc.LOGINFO)
+			Log(Log_Title + Sources + 'Check Sources: %s [LIGHT](all working  http %s + other %s)[/LIGHT]' % (sources_count, http_working, other), xbmc.LOGINFO)
 			ADDON.setSetting('sources_last_check', Now())
 			ADDON.setSetting('sources_not_work', '0')
 			ADDON.setSetting('sources_work', str(sources_count))
@@ -229,7 +226,7 @@ def Check_Sources():
 	except Exception as e:
 		Log(Log_Title + Sources + '%s' % str(e), xbmc.LOGERROR)
 
-	Log(Log_Title + Sources + '[COLOR %s][LIGHT]Finished (check sources: special://userdata/sources.xml)[/LIGHT][/COLOR]' % TEXT_DARK, xbmc.LOGINFO)
+	Log(Log_Title + Sources + '[COLOR %s][LIGHT]Finished (check sources: //userdata/sources.xml)[/LIGHT][/COLOR]' % TEXT_DARK, xbmc.LOGINFO)
 
 # ============================================================
 # FUNCTION: List_Check

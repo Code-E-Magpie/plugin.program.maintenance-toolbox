@@ -1735,7 +1735,7 @@ def shell():
 	if args.share and not machine_format:
 		DialogueProgress.close()
 		Dialogue.ok(Addon_Title, '[COLOR %s]Speedtest by Ookla: [LIGHT](Summary)[/LIGHT][CR][COLOR %s] > Download: [/COLOR][COLOR %s]%0.2f M%s/s[/COLOR][CR][COLOR %s] > Upload: [/COLOR][COLOR %s]%0.2f M%s/s[/COLOR][CR][COLOR %s] > Ping: [/COLOR][COLOR %s]%0.2f ms[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM, TEXT_VALUE, (results.download / 1000.0 / 1000.0) / args.units[1], args.units[0], TEXT_ITEM, TEXT_VALUE, (results.upload / 1000.0 / 1000.0) / args.units[1], args.units[0], TEXT_ITEM, TEXT_VALUE, (round(float(results.ping), 2))))
-		Log(Log_Title + Speedtest + 'Download: %0.2f M%s/s  |  Upload: %0.2f M%s/s  |  Ping: %0.2f ms' % ((results.download / 1000.0 / 1000.0) / args.units[1], args.units[0], (results.upload / 1000.0 / 1000.0) / args.units[1], args.units[0], results.ping), xbmc.LOGINFO)
+		Log(Log_Title + Speedtest + 'Download: %0.2f M%s/s  Upload: %0.2f M%s/s  Ping: %0.2f ms' % ((results.download / 1000.0 / 1000.0) / args.units[1], args.units[0], (results.upload / 1000.0 / 1000.0) / args.units[1], args.units[0], results.ping), xbmc.LOGINFO)
 
 	try:
 		with open(os.path.join(ADDON_DATA_MT, 'speedtest.txt'), 'w') as file:
