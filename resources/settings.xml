@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+
+	<!-- Adjust Add-ons -->
+	<category label="[LIGHT]Adjust Add-ons[/LIGHT]">
+		<setting id="ADJUST_ADD-ONS_1" type="lsep" label="[COLOR lightskyblue]Add-ons Builtin[/COLOR][COLOR darkgray][LIGHT] (Total Add-ons increase / Other Add-ons unchanged)[/LIGHT][/COLOR]"/>
+		<setting id="builtin_repository" type="bool" label="[COLOR silver]Include built-in repository [LIGHT]//xbmcbinaddons/ (default = on)[/LIGHT][/COLOR]" default="true"/>
+		<setting id="builtin_skin" type="bool" label="[COLOR silver]Include built-in skin [LIGHT]//xbmcbinaddons/ (default = on)[/LIGHT][/COLOR]" default="true"/>
+		<setting id="ADJUST_ADD-ONS_2" type="lsep" label="[COLOR lightskyblue]Add-ons Add[/COLOR][COLOR darkgray][LIGHT] (Total Add-ons unchanged / Other Add-ons decrease)[/LIGHT][/COLOR]"/>
+		<setting id="music_add" type="number" label="[COLOR silver]Music Add-ons: add to type[LIGHT] (default = 0)[/LIGHT][/COLOR]" default=""/>
+		<setting id="picture_add" type="number" label="[COLOR silver]Picture Add-ons: add to type[LIGHT] (default = 0)[/LIGHT][/COLOR]" default=""/>
+		<setting id="program_add" type="number" label="[COLOR silver]Program Add-ons: add to type[LIGHT] (default = 0)[/LIGHT][/COLOR]" default=""/>
+		<setting id="video_add" type="number" label="[COLOR silver]Video Add-ons: add to type[LIGHT] (default = 0)[/LIGHT][/COLOR]" default=""/>
+		<setting id="ADJUST_ADD-ONS_3" type="lsep" label="[COLOR lightskyblue]Add-ons Subtract[/COLOR][COLOR darkgray][LIGHT] (Total Add-ons unchanged / Other Add-ons increase)[/LIGHT][/COLOR]"/>
+		<setting id="music_subtract" type="number" label="[COLOR silver]Music Add-ons: subtract from type[LIGHT] (default = 0)[/LIGHT][/COLOR]" default=""/>
+		<setting id="picture_subtract" type="number" label="[COLOR silver]Picture Add-ons: subtract from type[LIGHT] (default = 0)[/LIGHT][/COLOR]" default=""/>
+		<setting id="program_subtract" type="number" label="[COLOR silver]Program Add-ons: subtract from type[LIGHT] (default = 0)[/LIGHT][/COLOR]" default=""/>
+		<setting id="video_subtract" type="number" label="[COLOR silver]Video Add-ons: subtract from type[LIGHT] (default = 0)[/LIGHT][/COLOR]" default=""/>
+	</category>
+
+	<!-- Clear Settings -->
+	<category label="[LIGHT]Clear Settings[/LIGHT]">
+		<setting id="CLEAR_SETTINGS_1" type="lsep" label="[COLOR blue]Clear Cache + Folders: folders[/COLOR][COLOR darkgray][LIGHT] (Tab: System + Add-on)[/LIGHT][/COLOR]"/>
+		<setting id="clear_uninstalled_folders_last_ran" type="text" label="[COLOR silver]Clear Uninstalled Folders last ran[LIGHT] (user):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="clear_empty_addon_data_folders" type="bool" label="[COLOR silver]Clear Empty Add-on Data Folders[LIGHT] //userdata/addon_data/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="clear_empty_addon_data_folders_last_ran" type="text" label="[COLOR silver]Clear Empty Add-on Data Folders last ran[LIGHT] (user):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="clear_empty_addon_folders" type="bool" label="[COLOR silver]Clear Empty Add-on Folders[LIGHT] //home/addons/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="clear_empty_addon_folders_last_ran" type="text" label="[COLOR silver]Clear Empty Add-on Folders last ran[LIGHT] (user):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="clear_cache_folders" type="bool" label="[COLOR silver]Clear Cache Folders[LIGHT] //userdata/addon_data/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="clear_cache_folders_last_ran" type="text" label="[COLOR silver]Clear Cache Folders last ran[LIGHT] (user):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="CLEAR_SETTINGS_2" type="lsep" label="[COLOR blue]Clear Cache + Folders: database[/COLOR][COLOR darkgray][LIGHT] (Tab: System + Add-on)[/LIGHT][/COLOR]"/>
+		<setting id="clear_database_cache_db" type="bool" label="[COLOR silver]Clear Database add-on data cache.db[LIGHT] //userdata/addon_data/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="clear_database_cache_db_last_ran" type="text" label="[COLOR silver]Clear Db add-on data cache.db last ran[LIGHT] (user):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="clear_database_thumbs_db" type="bool" label="[COLOR silver]Clear Database add-on data thumbs.db[LIGHT] //userdata/addon_data/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="clear_database_thumbs_db_last_ran" type="text" label="[COLOR silver]Clear Db add-on data thumbs.db last ran[LIGHT] (user):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="clear_database_cache_db_addons" type="bool" label="[COLOR silver]Clear Database add-ons cache.db[LIGHT] //home/addons/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="clear_database_cache_db_addons_last_ran" type="text" label="[COLOR silver]Clear Db add-ons cache.db last ran[LIGHT] add-ons (user):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="clear_database_thumbs_db_addons" type="bool" label="[COLOR silver]Clear Database add-ons thumbs.db[LIGHT] //home/addons/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="clear_database_thumbs_db_addons_last_ran" type="text" label="[COLOR silver]Clear Db add-ons thumbs.db last ran[LIGHT] (user):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="CLEAR_SETTINGS_3" type="lsep" label="[COLOR blue]Clear Cache + Folders: pycache[/COLOR][COLOR darkgray][LIGHT] (Tab: System + Add-on)[/LIGHT][/COLOR]"/>
+		<setting id="clear_addon_pycache" type="bool" label="[COLOR silver]Clear Add-on Pycache for Maintenance Toolbox[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="clear_addon_pycache_last_ran" type="text" label="[COLOR silver]Clear Add-on Pycache last ran[LIGHT] (user):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="clear_addon_resolveurl" type="bool" label="[COLOR silver]Clear Add-on ResolveURL[LIGHT] script.module.resolveurl (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="clear_addon_resolveurl_last_ran" type="text" label="[COLOR silver]Clear Add-on ResolveURL last ran[LIGHT] (user):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="clear_pycache_folders" type="bool" label="[COLOR silver]Clear Pycache Folders[LIGHT] //home/addons/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="clear_pycache_folders_last_ran" type="text" label="[COLOR silver]Clear Pycache Folders last ran[LIGHT] (user):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="CLEAR_SETTINGS_4" type="lsep" label="[COLOR blue]Clear Add-ons Surplus[/COLOR][COLOR darkgray][LIGHT] (Tab: System + Add-on)[/LIGHT][/COLOR]"/>
+		<setting id="clear_addons_surplus_last_ran" type="text" label="[COLOR silver]Clear Add-ons Surplus last ran[LIGHT] (user):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="CLEAR_SETTINGS_5" type="lsep" label="[COLOR blue]Clear Temp Folder[/COLOR][COLOR darkgray][LIGHT] (Tab: System + Add-on)[/LIGHT][/COLOR]"/>
+		<setting id="clear_temp_folder_last_ran" type="text" label="[COLOR silver]Clear Temp Folder last ran[LIGHT] (user):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="clear_archive_cache" type="bool" label="[COLOR silver]Clear Archive Cache[LIGHT] //temp/archive_cache/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="clear_archive_cache_last_ran" type="text" label="[COLOR silver]Clear Archive Cache last ran[LIGHT] (user):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="CLEAR_SETTINGS_6" type="lsep" label="[COLOR blue]Clear Thumbnails[/COLOR][COLOR darkgray][LIGHT] (Tab: System + Add-on)[/LIGHT][/COLOR]"/>
+		<setting id="clear_thumbnails_choice" type="bool" label="[COLOR silver]Clear Thumbnails set on to clear history or off to clear all[LIGHT] (default = on)[/LIGHT][/COLOR]" default="true"/>
+		<setting id="clear_thumbnails_history" type="number" label="[COLOR silver]Clear Thumbnails History age in days > 0[LIGHT] (default = 30)[/LIGHT][/COLOR]" default="30" visible="eq(-1,true)"/>
+		<setting id="clear_thumbnails_textures" type="bool" label="[COLOR silver]Clear Thumbnails Textures delete orphaned thumbnail files[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false" visible="eq(-2,true)"/>
+		<setting id="clear_thumbnails_textures_items" type="bool" label="[COLOR silver]Clear Thumbnails Textures remove fileless Textures*.db items[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false" visible="eq(-3,true) + eq(-1,true)"/>
+		<setting id="clear_textures_path" type="bool" label="[COLOR silver]Clear Textures Path empty path table in Textures*.db[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false" visible="eq(-4,true)"/>
+		<setting id="clear_thumbnails_count" type="bool" label="[COLOR silver]Count Thumbnails files and Textures*.db items[LIGHT] //thumbnails/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="epoch_thumbnails_last_ran" type="text" label="[COLOR silver]epoch thumbnails last ran[LIGHT] (function use only):[/LIGHT][/COLOR]" enable="false" default="" visible="false"/>
+		<setting id="clear_thumbnails_last_ran" type="text" label="[COLOR silver]Clear Thumbnails last ran[LIGHT] (user):[/LIGHT][/COLOR]" enable="false" default=""/>
+	</category>
+
+	<!-- Main Settings -->
+	<category label="[LIGHT]Main Settings[/LIGHT]">
+		<setting id="MAIN_SETTINGS_1" type="lsep" label="[COLOR blue]Backup Location / Close Interface / Notification Duration / Tab Image Visible[/COLOR]"/>
+		<setting id="backup_location" type="folder" label="[COLOR silver]Choose backup location[/COLOR]" default="/storage/emulated/0/Download/Kodi" option="writeable"/>
+		<setting id="close_interface" type="bool" label="[COLOR silver]Close interface and return to home screen on / off[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="notification_duration" type="number" label="[COLOR silver]Notification duration[LIGHT] (default = 3000ms i.e. 3 seconds)[/LIGHT][/COLOR]" default="3000"/>
+		<setting id="tab_image_visible" type="bool" label="[COLOR silver]Tab image visible all the time[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="MAIN_SETTINGS_2" type="lsep" label="[COLOR blue]Footer: Settings + Footer Menu[/COLOR]"/>
+		<setting id="dialogue_boxes" type="bool" label="[COLOR silver]Clean Database / Delete Database dialogue boxes on / off[LIGHT] (default = on)[/LIGHT][/COLOR]" default="true"/>
+		<setting id="notifications" type="bool" label="[COLOR silver]Clean Database / Delete Database notifications on / off[LIGHT] (default = on)[/LIGHT][/COLOR]" default="true"/>
+		<setting id="size_highlight" type="number" label="[COLOR silver]Size highlight[LIGHT] (default = 1048576 i.e. 1 MB)[/LIGHT][/COLOR]" default="1048576"/>
+		<setting id="MAIN_SETTINGS_3" type="lsep" label="[COLOR blue]Tab: System + Add-on[/COLOR]"/>
+		<setting id="storage_size" type="bool" label="[COLOR silver]Storage sizes visible for /storage/emulated/0/[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="log_details_for_clears" type="bool" label="[COLOR silver]Log details for clears[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="skip_notifications_for_clears" type="bool" label="[COLOR silver]Skip notifications for clears of zero value[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="textures_database_version" type="number" label="[COLOR silver]Clear Thumbnails History Textures*.db[LIGHT] (default = 13)[/LIGHT][/COLOR]" default="13" visible="eq(-2,true)"/>
+		<setting id="view_log_limit" type="number" label="[COLOR silver]View log limit prevents Kodi crashing[LIGHT] (default = 999)[/LIGHT][/COLOR]" default="999"/>
+		<setting id="MAIN_SETTINGS_4" type="lsep" label="[COLOR blue]Tab: Network + Internet[/COLOR]"/>
+		<setting id="network_information" type="bool" label="[COLOR silver]Network Information visible when tab loads[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="internet_information" type="bool" label="[COLOR silver]Internet Information visible when tab loads[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="url_attempts" type="number" label="[COLOR silver]Check Sources: URL number of attempts[LIGHT] (default = 3)[/LIGHT][/COLOR]" default="3"/>
+		<setting id="url_delay" type="number" label="[COLOR silver]Check Sources: URL delay between[LIGHT] (default = 500ms)[/LIGHT][/COLOR]" default="500"/>
+		<setting id="MAIN_SETTINGS_5" type="lsep" label="[COLOR blue]Tab: Backup + Restore[/COLOR]"/>
+		<setting id="tab3_refresh" type="bool" label="[COLOR silver]Auto refresh Backup + Restore tab[LIGHT] (default = on)[/LIGHT][/COLOR]" default="true"/>
+		<setting id="MAIN_SETTINGS_6" type="lsep" label="[COLOR blue]Tab: Backup + Delete[/COLOR]"/>
+		<setting id="tab4_refresh" type="bool" label="[COLOR silver]Auto refresh Backup + Delete tab[LIGHT] (default = on)[/LIGHT][/COLOR]" default="true"/>
+		<setting id="addons_size" type="bool" label="[COLOR silver]Kodi Add-ons and Backup Add-ons sizes visible[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+	</category>
+
+	<!-- Android Startup -->
+	<category label="[LIGHT]Android Startup[/LIGHT]">
+		<setting id="ANDROID_STARTUP_1" type="lsep" label="[COLOR dimgray]Startup Override[/COLOR]"/>
+		<setting id="startup_override" type="bool" label="[COLOR darkgray]Startup Override all startup activities[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="ANDROID_STARTUP_2" type="lsep" label="[COLOR limegreen]Android Folders[/COLOR][COLOR darkgray][LIGHT] (startup only)[/LIGHT][/COLOR]"/>
+		<setting id="android_avast" type="bool" label="[COLOR silver]Android Avast folder delete[LIGHT] Ams_vault (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="android_avast_last_deleted" type="text" label="[COLOR silver]Android Avast folder last deleted[LIGHT] (startup only):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="android_dcim" type="bool" label="[COLOR silver]Android DCIM folder delete[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="android_dcim_last_deleted" type="text" label="[COLOR silver]Android DCIM folder last deleted[LIGHT] (startup only):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="android_file_explorer" type="bool" label="[COLOR silver]Android FV File Explorer folder delete[LIGHT] .fvTrash (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="android_file_explorer_last_deleted" type="text" label="[COLOR silver]Android FV File Explorer folder last deleted[LIGHT] (startup only):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="android_movies" type="bool" label="[COLOR silver]Android Movies folder delete[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="android_movies_last_deleted" type="text" label="[COLOR silver]Android Movies folder last deleted[LIGHT] (startup only):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="android_music" type="bool" label="[COLOR silver]Android Music folder delete[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="android_music_last_deleted" type="text" label="[COLOR silver]Android Music folder last deleted[LIGHT] (startup only):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="android_pictures" type="bool" label="[COLOR silver]Android Pictures folder delete[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="android_pictures_last_deleted" type="text" label="[COLOR silver]Android Pictures folder last deleted[LIGHT] (startup only):[/LIGHT][/COLOR]" enable="false" default=""/>
+	</category>
+
+	<!-- Clear Startup -->
+	<category label="[LIGHT]Clear Startup[/LIGHT]">
+		<setting id="CLEAR_STARTUP_1" type="lsep" label="[COLOR dimgray]Startup Override[/COLOR]"/>
+		<setting id="startup_override" type="bool" label="[COLOR darkgray]Startup Override all startup activities[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="CLEAR_STARTUP_2" type="lsep" label="[COLOR orange]Quick Startup Override[/COLOR]"/>
+		<setting id="quick_startup_override" type="bool" label="[COLOR silver]Quick Startup Override selected clears[LIGHT] (*) //home/addons/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="CLEAR_STARTUP_3" type="lsep" label="[COLOR orange]Clear Cache + Folders: folders[/COLOR]"/>
+		<setting id="startup_uninstalled_folders" type="bool" label="[COLOR silver]Clear Uninstalled Folders[LIGHT] //userdata/addon_data/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="startup_uninstalled_folders_last_ran" type="text" label="[COLOR silver]Clear Uninstalled Folders last ran[LIGHT] (startup):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="startup_empty_addon_data_folders" type="bool" label="[COLOR silver]Clear Empty Add-on Data Folders[LIGHT] //userdata/addon_data/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="startup_empty_addon_data_folders_last_ran" type="text" label="[COLOR silver]Clear Empty Add-on Data Folders last ran[LIGHT] (startup):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="startup_empty_addon_folders" type="bool" label="[COLOR silver]Clear Empty Add-on Folders[LIGHT] (*) //home/addons/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="startup_empty_addon_folders_last_ran" type="text" label="[COLOR silver]Clear Empty Add-on Folders last ran[LIGHT] (startup):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="startup_cache_folders" type="bool" label="[COLOR silver]Clear Cache Folders[LIGHT] //userdata/addon_data/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="startup_cache_folders_last_ran" type="text" label="[COLOR silver]Clear Cache Folders last ran[LIGHT] (startup):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="CLEAR_STARTUP_4" type="lsep" label="[COLOR orange]Clear Cache + Folders: database[/COLOR]"/>
+		<setting id="startup_database_cache_db" type="bool" label="[COLOR silver]Clear Database add-on data cache.db[LIGHT] //userdata/addon_data/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="startup_database_cache_db_last_ran" type="text" label="[COLOR silver]Clear Db add-on data cache.db last ran[LIGHT] (startup):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="startup_database_thumbs_db" type="bool" label="[COLOR silver]Clear Database add-on data thumbs.db[LIGHT] //userdata/addon_data/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="startup_database_thumbs_db_last_ran" type="text" label="[COLOR silver]Clear Db add-on data thumbs.db last ran[LIGHT] (startup):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="startup_database_cache_db_addons" type="bool" label="[COLOR silver]Clear Database add-ons cache.db[LIGHT] (*) //home/addons/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="startup_database_cache_db_addons_last_ran" type="text" label="[COLOR silver]Clear Db add-ons cache.db last ran[LIGHT] (startup):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="startup_database_thumbs_db_addons" type="bool" label="[COLOR silver]Clear Database add-ons thumbs.db[LIGHT] (*) //home/addons/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="startup_database_thumbs_db_addons_last_ran" type="text" label="[COLOR silver]Clear Db add-ons thumbs.db last ran[LIGHT] (startup):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="CLEAR_STARTUP_5" type="lsep" label="[COLOR orange]Clear Cache + Folders: pycache[/COLOR]"/>
+		<setting id="startup_addon_pycache" type="bool" label="[COLOR silver]Clear Add-on Pycache for Maintenance Toolbox[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="startup_addon_pycache_last_ran" type="text" label="[COLOR silver]Clear Add-on Pycache last ran[LIGHT] (startup):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="startup_addon_resolveurl" type="bool" label="[COLOR silver]Clear Add-on ResolveURL[LIGHT] script.module.resolveurl (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="startup_addon_resolveurl_last_ran" type="text" label="[COLOR silver]Clear Add-on ResolveURL last ran[LIGHT] (startup):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="startup_pycache_folders" type="bool" label="[COLOR silver]Clear Pycache Folders[LIGHT] (*) //home/addons/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="startup_pycache_folders_last_ran" type="text" label="[COLOR silver]Clear Pycache Folders last ran[LIGHT] (startup):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="CLEAR_STARTUP_6" type="lsep" label="[COLOR orange]Clear Add-ons Surplus[/COLOR]"/>
+		<setting id="startup_addons_surplus" type="bool" label="[COLOR silver]Clear Add-ons Surplus[LIGHT] //home/addons/packages/ & temp/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="startup_addons_surplus_last_ran" type="text" label="[COLOR silver]Clear Add-ons Surplus last ran[LIGHT] (startup):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="CLEAR_STARTUP_7" type="lsep" label="[COLOR orange]Clear Temp Folder[/COLOR][COLOR dimgray][LIGHT] (archive cache cleared on start up by Kodi)[/LIGHT][/COLOR]"/>
+		<setting id="startup_temp_folder" type="bool" label="[COLOR silver]Clear Temp Folder excluding system logs[LIGHT] //temp/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="startup_temp_folder_last_ran" type="text" label="[COLOR silver]Clear Temp Folder last ran[LIGHT] (startup):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="CLEAR_STARTUP_8" type="lsep" label="[COLOR orange]Clear Thumbnails[/COLOR]"/>
+		<setting id="startup_thumbnails" type="bool" label="[COLOR silver]Clear Thumbnails[LIGHT] //thumbnails/ 0-9, a-f, Video/Bookmarks/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="startup_thumbnails_choice" type="bool" label="[COLOR silver]Set on to clear history or off to clear all[LIGHT] (default = on)[/LIGHT][/COLOR]" default="true" visible="eq(-1,true)"/>
+		<setting id="startup_thumbnails_history" type="number" label="[COLOR silver]Clear Thumbnails History age in days > 0[LIGHT] (default = 30)[/LIGHT][/COLOR]" default="30" visible="eq(-2,true) + eq(-1,true)"/>
+		<setting id="startup_thumbnails_textures" type="bool" label="[COLOR silver]Clear Thumbnails Textures delete orphaned thumbnail files[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false" visible="eq(-3,true) + eq(-2,true)"/>
+		<setting id="startup_thumbnails_textures_items" type="bool" label="[COLOR silver]Clear Thumbnails Textures remove fileless Textures*.db items[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false" visible="eq(-4,true) + eq(-3,true) + eq(-1,true)"/>
+		<setting id="startup_textures_path" type="bool" label="[COLOR silver]Clear Textures Path empty path table in Textures*.db[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false" visible="eq(-5,true) + eq(-4,true)"/>
+		<setting id="startup_thumbnails_count" type="bool" label="[COLOR silver]Count Thumbnails files and Textures*.db items[LIGHT] //thumbnails/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="epoch_thumbnails_last_ran" type="text" label="[COLOR silver]epoch thumbnails last ran[LIGHT] (function use only):[/LIGHT][/COLOR]" enable="false" default="" visible="false"/>
+		<setting id="startup_thumbnails_last_ran" type="text" label="[COLOR silver]Clear Thumbnails last ran[LIGHT] (startup):[/LIGHT][/COLOR]" enable="false" default=""/>
+	</category>
+
+	<!-- Custom & Alerts -->
+	<category label="[LIGHT]Custom & Alerts[/LIGHT]">
+		<setting id="CUSTOM_&_ALERTS_1" type="lsep" label="[COLOR dimgray]Startup Override[/COLOR]"/>
+		<setting id="startup_override" type="bool" label="[COLOR darkgray]Startup Override all startup activities[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="CUSTOM_&_ALERTS_2" type="lsep" label="[COLOR orange]Custom Fanart / Custom Icon[/COLOR][COLOR darkgray][LIGHT] (startup only)[/LIGHT][/COLOR]"/>
+		<setting id="custom_fanart_startup" type="bool" label="[COLOR silver]Custom Fanart replacement of standard fanart on startup[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="custom_icon_startup" type="bool" label="[COLOR silver]Custom Icon replacement of standard icon on startup[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="CUSTOM_&_ALERTS_3" type="lsep" label="[COLOR orange]Logs Alert[/COLOR][COLOR darkgray][LIGHT] (startup & opening toolbox)[/LIGHT][/COLOR]"/>
+		<setting id="logs_alert_startup" type="bool" label="[COLOR silver]Logs Alert on startup if count exceeds number set[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="logs_alert" type="number" label="[COLOR silver]Logs Alert if count exceeds number set[LIGHT] (default = 2)[/LIGHT][/COLOR]" default="2" visible="eq(-1,true)"/>
+		<setting id="logs_alert_last_notified" type="text" label="[COLOR silver]Logs Alert last notified[LIGHT] (startup & opening toolbox):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="CUSTOM_&_ALERTS_4" type="lsep" label="[COLOR orange]Thumbnails Alert[/COLOR][COLOR darkgray][LIGHT] (startup & opening toolbox)[/LIGHT][/COLOR]"/>
+		<setting id="thumbnails_alert_startup" type="bool" label="[COLOR silver]Thumbnails Alert on startup if size exceeds number set[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="thumbnails_alert" type="number" label="[COLOR silver]Thumbnails Alert if size exceeds[LIGHT] (default = 50 MB)[/LIGHT][/COLOR]" default="52428800" visible="eq(-1,true)"/>
+		<setting id="thumbnails_alert_last_notified" type="text" label="[COLOR silver]Thumbnails Alert last notified[LIGHT] (startup & opening toolbox):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="CUSTOM_&_ALERTS_5" type="lsep" label="[COLOR orange]Thumbnails Warning[/COLOR][COLOR darkgray][LIGHT] (startup only)[/LIGHT][/COLOR]"/>
+		<setting id="thumbnails_warning_startup" type="bool" label="[COLOR silver]Thumbnails Warning on startup if size exceeds number set[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="thumbnails_warning" type="number" label="[COLOR silver]Thumbnails Warning if size exceeds[LIGHT] (default = 30 MB)[/LIGHT][/COLOR]" default="31457280" visible="eq(-1,true)"/>
+		<setting id="thumbnails_warning_last_notified" type="text" label="[COLOR silver]Thumbnails Warning last notified[LIGHT] (startup only):[/LIGHT][/COLOR]" enable="false" default=""/>
+	</category>
+
+	<!-- Lists & Logs -->
+	<category label="[LIGHT]Lists & Logs[/LIGHT]">
+		<setting id="LIST_&_LOGS_1" type="lsep" label="[COLOR dimgray]Startup Override[/COLOR]"/>
+		<setting id="startup_override" type="bool" label="[COLOR darkgray]Startup Override all startup activities[LIGHT] (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="LIST_&_LOGS_2" type="lsep" label="[COLOR orange]List Files / Folders[/COLOR][COLOR darkgray][LIGHT] (startup only)[/COLOR][COLOR dimgray] also created by functions & saved to backup[/LIGHT][/COLOR]"/>
+		<setting id="userdata_list" type="bool" label="[COLOR silver]List Files in userdata[LIGHT] //userdata/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="addon_data_list" type="bool" label="[COLOR silver]List Folders in addon_data[LIGHT] //userdata/addon_data/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="addons_list" type="bool" label="[COLOR silver]List Folders in addons[LIGHT] //home/addons/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="addons_builtin_list" type="bool" label="[COLOR silver]List Folders in xbmcbinaddons[LIGHT] //xbmcbinaddons/ (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="LIST_&_LOGS_3" type="lsep" label="[COLOR orange]System Logs[/COLOR][COLOR darkgray][LIGHT] (startup only)[/LIGHT][/COLOR]"/>
+		<setting id="new_log" type="bool" label="[COLOR silver]New System Log file delete[LIGHT] //logpath/kodi.log (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="new_log_last_deleted" type="text" label="[COLOR silver]New System Log file last deleted[LIGHT] (startup only):[/LIGHT][/COLOR]" enable="false" default=""/>
+		<setting id="old_log" type="bool" label="[COLOR silver]Old System Log file delete[LIGHT] //logpath/kodi.old.log (default = off)[/LIGHT][/COLOR]" default="false"/>
+		<setting id="old_log_last_deleted" type="text" label="[COLOR silver]Old System Log file last deleted[LIGHT] (startup only):[/LIGHT][/COLOR]" enable="false" default=""/>
+	</category>
+
+	<!-- Text Colours -->
+	<category label="[LIGHT]Text Colours[/LIGHT]">
+		<setting id="TEXT_COLOURS_1" type="lsep" label="[COLOR yellow]Text Colours[/COLOR][COLOR darkgray][LIGHT] (excludes Settings and Speedtest by Ookla)[/LIGHT][/COLOR]"/>
+		<setting id="text_addon" type="select" label="[COLOR silver]Text Add-on Colour[LIGHT] (default = [COLOR yellow]yellow[/COLOR])[/LIGHT][/COLOR]" default="yellow" values="aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgrey|lightgreen|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|none|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen"/>
+		<setting id="text_column" type="select" label="[COLOR silver]Text Column Colour[LIGHT] (default = [COLOR lightskyblue]lightskyblue[/COLOR])[/LIGHT][/COLOR]" default="lightskyblue" values="aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgrey|lightgreen|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|none|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen"/>
+		<setting id="text_dark" type="select" label="[COLOR silver]Text Dark Colour[LIGHT] (default = [COLOR darkgray]darkgray[/COLOR])[/LIGHT][/COLOR]" default="darkgray" values="aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgrey|lightgreen|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|none|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen"/>
+		<setting id="text_dim" type="select" label="[COLOR silver]Text Dim Colour[LIGHT] (default = [COLOR dimgray]dimgray[/COLOR])[/LIGHT][/COLOR]" default="dimgray" values="aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgrey|lightgreen|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|none|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen"/>
+		<setting id="text_general" type="select" label="[COLOR silver]Text General Colour[LIGHT] (default = [COLOR silver]silver[/COLOR])[/LIGHT][/COLOR]" default="silver" values="aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgrey|lightgreen|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|none|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen"/>
+		<setting id="text_highlight" type="select" label="[COLOR silver]Text Highlight Colour[LIGHT] (default = [COLOR yellow]yellow[/COLOR])[/LIGHT][/COLOR]" default="yellow" values="aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgrey|lightgreen|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|none|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen"/>
+		<setting id="text_indicator" type="select" label="[COLOR silver]Text Indicator Colour[LIGHT] (default = [COLOR yellowgreen]yellowgreen[/COLOR])[/LIGHT][/COLOR]" default="yellowgreen" values="aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgrey|lightgreen|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|none|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen"/>
+		<setting id="text_item" type="select" label="[COLOR silver]Text Item Colour[LIGHT] (default = [COLOR blue]blue[/COLOR])[/LIGHT][/COLOR]" default="blue" values="aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgrey|lightgreen|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|none|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen"/>
+		<setting id="text_value" type="select" label="[COLOR silver]Text Value Colour[LIGHT] (default = [COLOR orange]orange[/COLOR])[/LIGHT][/COLOR]" default="orange" values="aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgrey|lightgreen|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|none|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen"/>
+	</category>
+
+	<!-- When Checked ? -->
+	<category label="[LIGHT]When Checked ?[/LIGHT]">
+		<setting id="WHEN_CHECKED_1" type="lsep" label="[COLOR dimgray]Tab: Network + Internet[LIGHT] (last checked)[/LIGHT][/COLOR]"/>
+		<setting id="repositories_work" type="text" label="Repositories working: " enable="false" default="0"/>
+		<setting id="repositories_not_work" type="text" label="Repositories not working: " enable="false" default="0"/>
+		<setting id="repositories_last_check" type="text" label="Repositories last checked: " enable="false" default=""/>
+		<setting id="sources_work" type="text" label="Sources working: " enable="false" default="0"/>
+		<setting id="sources_not_work" type="text" label="Sources not working: " enable="false" default="0"/>
+		<setting id="sources_last_check" type="text" label="Sources last checked: " enable="false" default=""/>
+		<setting id="speedtest_last_check" type="text" label="Speedtest last checked: " enable="false" default=""/>
+	</category>
+
+	<!-- When Saved ? -->
+	<category label="[LIGHT]When Saved ?[/LIGHT]">
+		<setting id="WHEN_SAVED_1" type="lsep" label="[COLOR dimgray]Tab: Backup + Restore[LIGHT] (last saved)[/LIGHT] / Tab: Backup + Delete[LIGHT] (last saved)[/LIGHT][/COLOR]"/>
+		<setting id="favourites_backup_save" type="text" label="Favourites Backup last saved: " enable="false" default=""/>
+		<setting id="guisettings_backup_save" type="text" label="GUI Settings Backup last saved: " enable="false" default=""/>
+		<setting id="profiles_backup_save" type="text" label="Profiles Backup last saved: " enable="false" default=""/>
+		<setting id="sources_backup_save" type="text" label="Sources Backup last saved: " enable="false" default=""/>
+		<setting id="logs_backup_save" type="text" label="Logs Backup last saved: " enable="false" default=""/>
+		<setting id="userdata_backup_save" type="text" label="Userdata Backup last saved: " enable="false" default=""/>
+		<setting id="addon_data_backup_save" type="text" label="Add-on Data Backup last saved: " enable="false" default=""/>
+		<setting id="addons_backup_save" type="text" label="Add-ons Backup last saved: " enable="false" default=""/>
+	</category>
+
+</settings>
