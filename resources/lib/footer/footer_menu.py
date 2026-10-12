@@ -30,7 +30,7 @@ from information import Database_User_Information, Favourites_User_Information
 from resources.lib.common.configuration import configuration
 from resources.lib.common.function import Add_Blank, Addon_Title, Addons_Db, Count_Folders, Dialogue, Log, Log_Title, Now, Size_Convert, Size_Total, TextBox, Warning
 
-from resources.lib.footer.database_toolbox import Clean_Addons_Database, Clean_Databases
+from resources.lib.footer.database_toolbox import Clean_Addons_Database, Select_Database
 from resources.lib.footer.reorder_favourites import Reorder_Favourites
 from resources.lib.tab1.addon import Data_Addon, Data_Addon_Builtin
 
@@ -108,7 +108,7 @@ def Addon_Files(file_type):
 	column = column_text + "\n\n" if blank == 'true' else column_text + "\n"
 	file = "\n\n".join(file_paths) if blank == 'true' else "\n".join(file_paths)
 
-	Files_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: %s)[/LIGHT][/COLOR][CR][CR]%s[COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join(title), TEXT_VALUE, path, '' if file_count == 0 else column, TEXT_GENERAL, ('None found.' if file_count == 0 else file))
+	Files_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: /%s)[/LIGHT][/COLOR][CR][CR]%s[COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join(title), TEXT_VALUE, path, '' if file_count == 0 else column, TEXT_GENERAL, ('None found.' if file_count == 0 else file))
 	TextBox('[B]%s[/B][CR][COLOR %s]%s: [/COLOR][COLOR %s]%s  [/COLOR]' % (Addon_Title, TEXT_ITEM, title.title(), TEXT_VALUE, file_count) + ('[COLOR %s][LIGHT]Thumbs.db files: [/COLOR][COLOR %s]%s[/LIGHT][/COLOR]' % (TEXT_ITEM, TEXT_VALUE, thumbs_count) if file_type == 'database' else ''), Files_Text)
 
 # ============================================================
@@ -136,7 +136,7 @@ def Addon_Folders(folder_path, title):
 	column_text = '[COLOR %s]%s %s Size[/COLOR]' % (TEXT_GENERAL, 'Folder' if title == 'Home Folders' else 'Add-on ID', Arrow)
 	column = column_text + "\n\n" if blank == 'true' else column_text + "\n"
 
-	Addon_Folders_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: %s)[/LIGHT][/COLOR][CR][CR]%s[COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join(title).upper(), TEXT_VALUE, folder_path, column, TEXT_GENERAL, folders)
+	Addon_Folders_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: /%s)[/LIGHT][/COLOR][CR][CR]%s[COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join(title).upper(), TEXT_VALUE, folder_path, column, TEXT_GENERAL, folders)
 	TextBox('[B]%s[/B][CR][COLOR %s]%s: [/COLOR][COLOR %s]%s  [/COLOR][COLOR %s]Total Size: [/COLOR][COLOR %s]%s[/COLOR]' % (Addon_Title, TEXT_ITEM, title, TEXT_VALUE, Count_Folders(folder_path), TEXT_ITEM, TEXT_VALUE, Size_Convert(Size_Bytes)), Addon_Folders_Text)
 
 # ============================================================
@@ -166,7 +166,7 @@ def Addon_Pycache_Folders(folder_path, title):
 	column_text =  '[COLOR %s]Path %s Size[/COLOR]' % (TEXT_GENERAL, Arrow)
 	column = column_text + "\n\n" if blank == 'true' else column_text + "\n"
 
-	Addon_Pycache_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: %s)[/LIGHT][/COLOR][CR][CR]%s[COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join(title).upper(), TEXT_VALUE, folder_path, column, TEXT_GENERAL, folders_text)
+	Addon_Pycache_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: /%s)[/LIGHT][/COLOR][CR][CR]%s[COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join(title).upper(), TEXT_VALUE, folder_path, column, TEXT_GENERAL, folders_text)
 	TextBox('[B]%s[/B][CR][COLOR %s]%s: [/COLOR][COLOR %s]%s  [/COLOR][COLOR %s]Total Size: [/COLOR][COLOR %s]%s[/COLOR]' % (Addon_Title, TEXT_ITEM, title, TEXT_VALUE, len(folders), TEXT_ITEM, TEXT_VALUE, Size_Convert(Size_Bytes)), Addon_Pycache_Text)
 
 # ============================================================
@@ -183,7 +183,7 @@ def Addon_Type(addon_type, title):
 	blank = Add_Blank()
 	addons = "\n\n".join(addon_type) if blank == 'true' else "\n".join(addon_type)
 
-	Addon_Type_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: %s)[/LIGHT][/COLOR][CR][CR][COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join(title).upper(), TEXT_VALUE, ADDONS, TEXT_GENERAL, addons if int(str(len(addon_type))) != 0 else 'None found.')
+	Addon_Type_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: /%s)[/LIGHT][/COLOR][CR][CR][COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join(title).upper(), TEXT_VALUE, ADDONS, TEXT_GENERAL, addons if int(str(len(addon_type))) != 0 else 'None found.')
 	TextBox('[B]%s[/B][CR][COLOR %s]%s: [/COLOR][COLOR %s]%s[/COLOR]' % (Addon_Title, TEXT_ITEM, title, TEXT_VALUE, int(str(len(addon_type)))), Addon_Type_Text)
 
 # ============================================================
@@ -193,6 +193,9 @@ def Addon_Type(addon_type, title):
 def Addons_Disabled():
 
 	addons_db = Addons_Db()
+
+	connection = None
+	cursor = None
 
 	try:
 		connection = sqlite3.connect(os.path.join(DATABASE, addons_db))
@@ -222,8 +225,15 @@ def Addons_Disabled():
 
 	finally:
 		try:
+			if cursor:
+				cursor.close()
+		except Exception:
+			pass
+		try:
 			if connection:
 				connection.close()
+		except Exception:
+			pass
 
 		except UnboundLocalError as e:
 			Log(Log_Title + Footer + '%s connection error: %s' % (addons_db, str(e)), xbmc.LOGERROR)
@@ -231,7 +241,7 @@ def Addons_Disabled():
 	blank = Add_Blank()
 	disabled = str(disabled).replace("[('","Reason', 'Date Installed', '\tAdd-on ID (Install Method: manual / repository / system)'), ('").replace("')]","").replace("'), ('",("\n\n" if blank == 'true' else "\n")).replace("', '","\t\t\t")
 
-	Disabled_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: %s%s)[/LIGHT][/COLOR][CR][CR][COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join('DISABLED ADD-ONS'), TEXT_VALUE, DATABASE, addons_db, TEXT_GENERAL, (disabled if disabled_count != 0 else 'All add-ons enabled.'))
+	Disabled_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: /%s%s)[/LIGHT][/COLOR][CR][CR][COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join('DISABLED ADD-ONS'), TEXT_VALUE, DATABASE, addons_db, TEXT_GENERAL, (disabled if disabled_count != 0 else 'All add-ons enabled.'))
 	TextBox('[B]%s[/B][CR][COLOR %s]Enabled Add-ons: [COLOR %s]%s  [/COLOR]Disabled Add-ons: [/COLOR][COLOR %s]%s[/COLOR]' % (Addon_Title, TEXT_ITEM, TEXT_VALUE, enabled_count, TEXT_VALUE, disabled_count), Disabled_Text)
 
 # ============================================================
@@ -241,6 +251,9 @@ def Addons_Disabled():
 def Addons_Disabled_Updates():
 
 	addons_db = Addons_Db()
+
+	connection = None
+	cursor = None
 
 	try:
 		connection = sqlite3.connect(os.path.join(DATABASE, addons_db))
@@ -264,8 +277,15 @@ def Addons_Disabled_Updates():
 
 	finally:
 		try:
+			if cursor:
+				cursor.close()
+		except Exception:
+			pass
+		try:
 			if connection:
 				connection.close()
+		except Exception:
+			pass
 
 		except UnboundLocalError as e:
 			Log(Log_Title + Footer + '%s connection error: %s' % (addons_db, str(e)), xbmc.LOGERROR)
@@ -273,7 +293,7 @@ def Addons_Disabled_Updates():
 	blank = Add_Blank()
 	updates = str(updates).replace("[('","Method', '\tAdd-on ID'), ('").replace("')]","").replace("'), ('",("\n\n" if blank == 'true' else "\n")).replace("', '","\t\t\t")
 
-	Updates_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: %s%s)[/LIGHT][/COLOR][CR][CR][COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join('ADD-ONS DISABLED AUTO-UPDATE'), TEXT_VALUE, DATABASE, addons_db, TEXT_GENERAL, (updates if updates_count != 0 else 'Auto-update enabled for all add-ons.'))
+	Updates_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: /%s%s)[/LIGHT][/COLOR][CR][CR][COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join('ADD-ONS DISABLED AUTO-UPDATE'), TEXT_VALUE, DATABASE, addons_db, TEXT_GENERAL, (updates if updates_count != 0 else 'Auto-update enabled for all add-ons.'))
 	TextBox('[B]%s[/B][CR][COLOR %s]Add-ons Disabled Auto-Update: [COLOR %s]%s[/COLOR][/COLOR]' % (Addon_Title, TEXT_ITEM, TEXT_VALUE, updates_count), Updates_Text)
 
 # ============================================================
@@ -304,6 +324,9 @@ def Addons_Installed(installed_name):
 	except KeyError:
 		Log(Log_Title + Footer + 'installed name error: %s' % installed_name, xbmc.LOGERROR)
 
+	connection = None
+	cursor = None
+
 	try:
 		connection = sqlite3.connect(os.path.join(DATABASE, addons_db))
 		cursor = connection.cursor()
@@ -324,8 +347,15 @@ def Addons_Installed(installed_name):
 
 	finally:
 		try:
+			if cursor:
+				cursor.close()
+		except Exception:
+			pass
+		try:
 			if connection:
 				connection.close()
+		except Exception:
+			pass
 
 		except UnboundLocalError as e:
 			Log(Log_Title + Footer + '%s connection error: %s' % (addons_db, str(e)), xbmc.LOGERROR)
@@ -333,7 +363,7 @@ def Addons_Installed(installed_name):
 	blank = Add_Blank()
 	installed = str(installed).replace("None", "'None                       '").replace("[('","Install Date             ', 'Last Updated           ', 'Last Used              ', 'Add-on ID'), ('").replace("')]","").replace("'), ('",("\n\n" if blank == 'true' else "\n")).replace("', '","\t\t")
 
-	Installed_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: %s%s)[/LIGHT][/COLOR][CR][CR][COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join(installed_title), TEXT_VALUE, DATABASE, addons_db, TEXT_GENERAL, installed)
+	Installed_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: /%s%s)[/LIGHT][/COLOR][CR][CR][COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join(installed_title), TEXT_VALUE, DATABASE, addons_db, TEXT_GENERAL, installed)
 	TextBox('[B]%s[/B][CR][COLOR %s]%s: [/COLOR][COLOR %s]%s[/COLOR]' % (Addon_Title, TEXT_ITEM, installed_title.title(), TEXT_VALUE, installed_count), Installed_Text)
 
 # ============================================================
@@ -343,6 +373,9 @@ def Addons_Installed(installed_name):
 def Addons_Packages():
 
 	addons_db = Addons_Db()
+
+	connection = None
+	cursor = None
 
 	try:
 		connection = sqlite3.connect(os.path.join(DATABASE, addons_db))
@@ -366,8 +399,15 @@ def Addons_Packages():
 
 	finally:
 		try:
+			if cursor:
+				cursor.close()
+		except Exception:
+			pass
+		try:
 			if connection:
 				connection.close()
+		except Exception:
+			pass
 
 		except UnboundLocalError as e:
 			Log(Log_Title + Footer + '%s connection error: %s' % (addons_db, str(e)), xbmc.LOGERROR)
@@ -377,7 +417,7 @@ def Addons_Packages():
 	column = column_text + "\n\n" if blank == 'true' else column_text + "\n"
 	package_table = str(package_table).replace("[('","").replace("')]","").replace("'), ('",("\n\n" if blank == 'true' else "\n")).replace("', '", Arrow)
 
-	Package_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: %s%s)[/LIGHT][/COLOR][CR][CR]%s[COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join('PACKAGES'), TEXT_VALUE, DATABASE, addons_db, column, TEXT_GENERAL, package_table)
+	Package_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: /%s%s)[/LIGHT][/COLOR][CR][CR]%s[COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join('PACKAGES'), TEXT_VALUE, DATABASE, addons_db, column, TEXT_GENERAL, package_table)
 	TextBox('[B]%s[/B][CR][COLOR %s]Packages: [/COLOR][COLOR %s]%s[/COLOR]' % (Addon_Title, TEXT_ITEM, TEXT_VALUE, package_count), Package_Text)
 
 # ============================================================
@@ -387,6 +427,9 @@ def Addons_Packages():
 def Addons_Repositories(repositories_name):
 
 	addons_db = Addons_Db()
+
+	connection = None
+	cursor = None
 
 	try:
 		connection = sqlite3.connect(os.path.join(DATABASE, addons_db))
@@ -416,8 +459,15 @@ def Addons_Repositories(repositories_name):
 
 	finally:
 		try:
+			if cursor:
+				cursor.close()
+		except Exception:
+			pass
+		try:
 			if connection:
 				connection.close()
+		except Exception:
+			pass
 
 		except UnboundLocalError as e:
 			Log(Log_Title + Footer + '%s connection error: %s' % (addons_db, str(e)), xbmc.LOGERROR)
@@ -426,7 +476,7 @@ def Addons_Repositories(repositories_name):
 	repositories_no = '[COLOR %s]No repositories without add-ons identified.[/COLOR]' % TEXT_GENERAL
 	repositories = str(repositories).replace("[('","Status', 'Kodi Last Checked  ', 'Kodi Next Check    ', 'Version ', 'Add-on ID'), ('").replace("')]","").replace("'), ('",("\n\n" if blank == 'true' else "\n")).replace("', '","\t\t").replace("[]", repositories_no)
 
-	Repositories_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: %s%s)[/LIGHT][/COLOR][CR][CR][COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join(repositories_name).upper(), TEXT_VALUE, DATABASE, addons_db, TEXT_GENERAL, repositories)
+	Repositories_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: /%s%s)[/LIGHT][/COLOR][CR][CR][COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join(repositories_name).upper(), TEXT_VALUE, DATABASE, addons_db, TEXT_GENERAL, repositories)
 	No_Addons_Text = '' if repositories_count == 0 else '[COLOR %s][CR][CR][CR]The repositories shown above may be surplus to requirements as they have no significant add-ons installed.[CR][CR]The repositories may have other repositories and / or script.module.* add-ons installed.[CR][CR]Please check the repositories before removing.[/COLOR]' % TEXT_GENERAL
 	TextBox('[B]%s[/B][CR][COLOR %s]Repositories: [/COLOR][COLOR %s]%s  [/COLOR]' % (Addon_Title, TEXT_ITEM, TEXT_VALUE, repositories_count) + ('[COLOR %s][LIGHT]Not working: [/COLOR][COLOR %s]%s[/LIGHT][/COLOR]' % (TEXT_ITEM, TEXT_VALUE, not_working) if repositories_name == 'repositories' else ''), Repositories_Text if repositories_name == 'repositories' else (Repositories_Text + No_Addons_Text))
 
@@ -437,6 +487,9 @@ def Addons_Repositories(repositories_name):
 def Addons_Repository(sort_by):
 
 	addons_db = Addons_Db()
+
+	connection = None
+	cursor = None
 
 	try:
 		connection = sqlite3.connect(os.path.join(DATABASE, addons_db))
@@ -475,8 +528,15 @@ def Addons_Repository(sort_by):
 
 	finally:
 		try:
+			if cursor:
+				cursor.close()
+		except Exception:
+			pass
+		try:
 			if connection:
 				connection.close()
+		except Exception:
+			pass
 
 		except UnboundLocalError as e:
 			Log(Log_Title + Footer + '%s connection error: %s' % (addons_db, str(e)), xbmc.LOGERROR)
@@ -484,7 +544,7 @@ def Addons_Repository(sort_by):
 	blank = Add_Blank()
 	addons_repository = str(addons_repository).replace("[('","Repository Add-on ID ', ' Add-on ID (Add-on Version)'), ('" if sort_by == "repository" else "Add-on ID (Add-on Version) ', ' Repository Add-on ID'), ('").replace("')]","").replace("'), ('",("\n\n" if blank == 'true' else "\n")).replace("', '", Arrow)
 
-	Addons_Repository_Text = '[COLOR %s][B]%s[/B]%s[/COLOR][COLOR %s][LIGHT][CR](Data Source: %s%s)[/LIGHT][/COLOR][CR][CR][COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join('ADD-ONS REPOSITORY'), ('  (excludes script.module.* add-ons)' if sort_by == "repository" else ''), TEXT_VALUE, DATABASE, addons_db, TEXT_GENERAL, addons_repository)
+	Addons_Repository_Text = '[COLOR %s][B]%s[/B]%s[/COLOR][COLOR %s][LIGHT][CR](Data Source: /%s%s)[/LIGHT][/COLOR][CR][CR][COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join('ADD-ONS REPOSITORY'), ('  (excludes script.module.* add-ons)' if sort_by == "repository" else ''), TEXT_VALUE, DATABASE, addons_db, TEXT_GENERAL, addons_repository)
 	TextBox('[B]%s[/B][CR][COLOR %s]Add-ons: [COLOR %s]%s  [/COLOR]Repositories: [COLOR %s]%s[/COLOR][/COLOR]' % (Addon_Title, TEXT_ITEM, TEXT_VALUE, addons_count if sort_by == "repository" else addon_count, TEXT_VALUE, repositories_count if sort_by == "repository" else repository_count), Addons_Repository_Text)
 
 # ============================================================
@@ -510,6 +570,9 @@ def Addons_Tables(table_name):
 	except KeyError:
 		Log(Log_Title + Footer + 'table name error: %s' % table_name, xbmc.LOGERROR)
 
+	connection = None
+	cursor = None
+
 	try:
 		connection = sqlite3.connect(os.path.join(DATABASE, addons_db))
 		cursor = connection.cursor()
@@ -534,8 +597,15 @@ def Addons_Tables(table_name):
 
 	finally:
 		try:
+			if cursor:
+				cursor.close()
+		except Exception:
+			pass
+		try:
 			if connection:
 				connection.close()
+		except Exception:
+			pass
 
 		except UnboundLocalError as e:
 			Log(Log_Title + Footer + '%s connection error: %s' % (addons_db, str(e)), xbmc.LOGERROR)
@@ -547,7 +617,7 @@ def Addons_Tables(table_name):
 	column_addons = column_addons_text + "\n\n" if blank == 'true' else column_addons_text + "\n"
 	table = str(table).replace("[('","").replace("[(","").replace("')]","").replace(")]","").replace("'), (",("\n\n" if blank == 'true' else "\n")).replace("'), ('",("\n\n" if blank == 'true' else "\n")).replace("), ('",("\n\n" if blank == 'true' else "\n")).replace("), (",("\n\n" if blank == 'true' else "\n")).replace("', '", Arrow).replace("', ", Arrow).replace(", '", Arrow).replace(", ", Arrow)
 
-	Tables_Text = '[COLOR %s][B]%s[/B][/COLOR][COLOR %s][LIGHT][CR](Data Source: %s%s)[/LIGHT][/COLOR][CR][CR][COLOR %s]%s%s[/COLOR]' % (TEXT_ITEM, ' '.join(table_name).upper(), TEXT_VALUE, DATABASE, addons_db, TEXT_GENERAL, column if table_name != 'addons' else column_addons, table if table_count != 0 else 'No lines in %s table.' % table_name)
+	Tables_Text = '[COLOR %s][B]%s[/B][/COLOR][COLOR %s][LIGHT][CR](Data Source: /%s%s)[/LIGHT][/COLOR][CR][CR][COLOR %s]%s%s[/COLOR]' % (TEXT_ITEM, ' '.join(table_name).upper(), TEXT_VALUE, DATABASE, addons_db, TEXT_GENERAL, column if table_name != 'addons' else column_addons, table if table_count != 0 else 'No lines in %s table.' % table_name)
 	TextBox('[B]%s[/B][CR][COLOR %s]%s table: [/COLOR][COLOR %s]%s[LIGHT] lines[/LIGHT][/COLOR]' % (Addon_Title, TEXT_ITEM, table_name, TEXT_VALUE, table_count), Tables_Text)
 
 # ============================================================
@@ -601,7 +671,7 @@ def Sources_File():
 	column = column_text + "\n\n" if blank == 'true' else column_text + "\n"
 	sources_xml = str(sources_xml).replace("[('","").replace("')]","").replace("('","").replace("'), ",("\n\n" if blank == 'true' else "\n")).replace("', '", Arrow)
 
-	Sources_File_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: %s)[/LIGHT][/COLOR][CR][CR]%s[COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join('SOURCES FILE'), TEXT_VALUE, SOURCES, column, TEXT_GENERAL, sources_xml)
+	Sources_File_Text = '[COLOR %s][B]%s[/B][COLOR %s][LIGHT][CR](Data Source: /%s)[/LIGHT][/COLOR][CR][CR]%s[COLOR %s]%s[/COLOR]' % (TEXT_ITEM, ' '.join('SOURCES FILE'), TEXT_VALUE, SOURCES, column, TEXT_GENERAL, sources_xml)
 	TextBox('[B]%s[/B][CR][COLOR %s]Sources: [/COLOR][COLOR %s]%s  [/COLOR][COLOR %s][LIGHT]locations: [COLOR %s]%s  [/COLOR]http: [COLOR %s]%s[/COLOR][/LIGHT][/COLOR]' % (Addon_Title, TEXT_ITEM, TEXT_VALUE, sources_count, TEXT_ITEM, TEXT_VALUE, (sources_count - http_count), TEXT_VALUE, http_count), Sources_File_Text)
 
 # ============================================================
@@ -610,25 +680,25 @@ def Sources_File():
 
 def The_Footer_Menu():
 
-	footer_menu = ['Settings', 'Add-on Checks [COLOR %s]+ Repository [/COLOR][COLOR %s][LIGHT] (%s database)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM, Addons_Db()), 'Add-on Folders + Files [COLOR %s][LIGHT] (add-on ID / path + size)[/LIGHT][/COLOR]' % TEXT_DIM, 'Add-on Information [COLOR %s]Check [/COLOR][COLOR %s][LIGHT] (Tab: System + Add-on)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), 'Repositories [COLOR %s][LIGHT] (installed)[/LIGHT][/COLOR]' % TEXT_DIM, 'Sources File [COLOR %s][LIGHT] (sources.xml)[/LIGHT][/COLOR]' % TEXT_DIM, '[COLOR %s]Database Toolbox: [/COLOR]User Information' % TEXT_DARK, 'Database Toolbox [COLOR %s][LIGHT] (.db file list + clean .db files)[/LIGHT][/COLOR]' % TEXT_DIM, '[COLOR %s]Reorder Favourites: [/COLOR]User Information' % TEXT_DARK, 'Reorder Favourites [COLOR %s][LIGHT] (favourites.xml)[/LIGHT][/COLOR]' % TEXT_DIM]
+	footer_menu = ['Settings', 'Add-on Checks [COLOR %s]+ Repository [/COLOR][COLOR %s][LIGHT] (%s database)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM, Addons_Db()), 'Add-on Folders + Files [COLOR %s][LIGHT] (add-on ID / path + size)[/LIGHT][/COLOR]' % TEXT_DIM, 'Add-on Information [COLOR %s]Check [/COLOR][COLOR %s][LIGHT] (Tab: System + Add-on)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), 'Repositories [COLOR %s][LIGHT] (installed)[/LIGHT][/COLOR]' % TEXT_DIM, 'Sources File [COLOR %s][LIGHT] (sources.xml)[/LIGHT][/COLOR]' % TEXT_DIM, '[COLOR %s]Database Toolbox: [/COLOR]User Information' % TEXT_DARK, 'Database Toolbox [COLOR %s][LIGHT] (.db file list / clean or delete .db files)[/LIGHT][/COLOR]' % TEXT_DIM, '[COLOR %s]Reorder Favourites: [/COLOR]User Information' % TEXT_DARK, 'Reorder Favourites [COLOR %s][LIGHT] (favourites.xml)[/LIGHT][/COLOR]' % TEXT_DIM]
 
-	addons_menu = ['< < <  [COLOR %s][LIGHT]back to Footer Menu[/LIGHT][/COLOR]' % TEXT_DIM, '[COLOR %s]Add-ons[/COLOR] Disabled' % TEXT_DARK, '[COLOR %s]Add-ons[/COLOR] Disabled Auto-Update' % TEXT_DARK, '[COLOR %s]Add-ons[/COLOR] Origin Not Set [COLOR %s][LIGHT] (no repository assigned)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), '[COLOR %s]Add-ons[/COLOR] Last Updated [COLOR %s][LIGHT] (last updated set)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), '[COLOR %s]Add-ons[/COLOR] Last Used [COLOR %s][LIGHT] (last used set)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), '[COLOR %s]Add-ons[/COLOR] Never Used [COLOR %s][LIGHT] (last used not set excludes repos)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), '[COLOR %s]Add-ons[/COLOR] Packages' % TEXT_DARK, '[COLOR %s]Add-ons[/COLOR] Repository [COLOR %s][LIGHT] (sort repo excludes script.module.*)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), 'No Add-on [COLOR %s]Repositories[/COLOR]' % TEXT_DARK]
+	addons_menu = ['< < <  [COLOR %s][LIGHT]back to menu[/LIGHT][/COLOR]' % TEXT_DIM, '[COLOR %s]Add-ons[/COLOR] Disabled' % TEXT_DARK, '[COLOR %s]Add-ons[/COLOR] Disabled Auto-Update' % TEXT_DARK, '[COLOR %s]Add-ons[/COLOR] Origin Not Set [COLOR %s][LIGHT] (no repository assigned)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), '[COLOR %s]Add-ons[/COLOR] Last Updated [COLOR %s][LIGHT] (last updated set)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), '[COLOR %s]Add-ons[/COLOR] Last Used [COLOR %s][LIGHT] (last used set)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), '[COLOR %s]Add-ons[/COLOR] Never Used [COLOR %s][LIGHT] (last used not set excludes repos)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), '[COLOR %s]Add-ons[/COLOR] Packages' % TEXT_DARK, '[COLOR %s]Add-ons[/COLOR] Repository [COLOR %s][LIGHT] (sort repo excludes script.module.*)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), 'No Add-on [COLOR %s]Repositories[/COLOR]' % TEXT_DARK]
 
-	sort_menu = ['< < <  [COLOR %s][LIGHT]back to Footer Menu[/LIGHT][/COLOR]' % TEXT_DIM,  '[COLOR %s]Add-ons[/COLOR] Repository [COLOR %s][LIGHT] (sort add-on Add-on ID asc)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), '[COLOR %s]Add-ons[/COLOR] Repository [COLOR %s][LIGHT] (sort repository Add-on ID asc)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM)]
+	sort_menu = ['< < <  [COLOR %s][LIGHT]back to menu[/LIGHT][/COLOR]' % TEXT_DIM,  '[COLOR %s]Add-ons[/COLOR] Repository [COLOR %s][LIGHT] (sort add-on Add-on ID asc)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), '[COLOR %s]Add-ons[/COLOR] Repository [COLOR %s][LIGHT] (sort repository Add-on ID asc)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM)]
 
-	size_menu = ['< < <  [COLOR %s][LIGHT]back to Footer Menu[/LIGHT][/COLOR]' % TEXT_DIM, 'Add-on Data [COLOR %s]Folders + Size [/COLOR][COLOR %s][LIGHT] (5 seconds or less)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), 'Add-on [COLOR %s]Folders + Size [/COLOR][COLOR %s][LIGHT] (10 seconds or less)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), 'Built-in Add-on [COLOR %s]Folders + Size [/COLOR][COLOR %s][LIGHT] (5 seconds or less)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), 'Home [COLOR %s]Folders + Size [/COLOR][COLOR %s][LIGHT] (5 seconds or less)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), 'Python Cache [COLOR %s]Folders + Size [/COLOR][COLOR %s][LIGHT] (__pycache__ folder list)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), 'Database Files [COLOR %s][LIGHT] (.db file list)[/LIGHT][/COLOR]' % TEXT_DIM, 'Cache Databases [COLOR %s][LIGHT] (cache.db list)[/LIGHT][/COLOR]' % TEXT_DIM, '[COLOR %s]Add-on [/COLOR]Fanart Files [COLOR %s][LIGHT] (fanart.jpg list)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), '[COLOR %s]Add-on [/COLOR]Icon Files [COLOR %s][LIGHT] (icon.png list)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM)]
+	size_menu = ['< < <  [COLOR %s][LIGHT]back to menu[/LIGHT][/COLOR]' % TEXT_DIM, 'Add-on Data [COLOR %s]Folders + Size [/COLOR][COLOR %s][LIGHT] (5 seconds or less)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), 'Add-on [COLOR %s]Folders + Size [/COLOR][COLOR %s][LIGHT] (10 seconds or less)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), 'Built-in Add-on [COLOR %s]Folders + Size [/COLOR][COLOR %s][LIGHT] (5 seconds or less)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), 'Home [COLOR %s]Folders + Size [/COLOR][COLOR %s][LIGHT] (5 seconds or less)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), 'Python Cache [COLOR %s]Folders + Size [/COLOR][COLOR %s][LIGHT] (__pycache__ folder list)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), 'Database Files [COLOR %s][LIGHT] (.db file list)[/LIGHT][/COLOR]' % TEXT_DIM, 'Cache Databases [COLOR %s][LIGHT] (cache.db list)[/LIGHT][/COLOR]' % TEXT_DIM, '[COLOR %s]Add-on [/COLOR]Fanart Files [COLOR %s][LIGHT] (fanart.jpg list)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM), '[COLOR %s]Add-on [/COLOR]Icon Files [COLOR %s][LIGHT] (icon.png list)[/LIGHT][/COLOR]' % (TEXT_DARK, TEXT_DIM)]
 
-	type_menu = ['< < <  [COLOR %s][LIGHT]back to Footer Menu[/LIGHT][/COLOR]' % TEXT_DIM, 'Exception [COLOR %s][LIGHT] (addon.xml: provides is non standard)[/LIGHT][/COLOR]' % TEXT_DIM, 'Game Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'InputStream Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'Metadata [COLOR %s][LIGHT] (Information Providers folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'Music Add-ons [COLOR %s][LIGHT] (addon.xml: provides = audio)[/LIGHT][/COLOR]' % TEXT_DIM, 'Other Add-ons [COLOR %s][LIGHT] (other folder name starts)[/LIGHT][/COLOR]' % TEXT_DIM, 'Others Add-ons [COLOR %s][LIGHT] (addon.xml: provides not set)[/LIGHT][/COLOR]' % TEXT_DIM, 'Picture Add-ons [COLOR %s][LIGHT] (addon.xml: provides = image)[/LIGHT][/COLOR]' % TEXT_DIM, 'Program Add-ons [COLOR %s][LIGHT] (addon.xml: provides = executable)[/LIGHT][/COLOR]' % TEXT_DIM, 'Repository Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'Resource Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'Service Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'Skin Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'Video Add-ons [COLOR %s][LIGHT] (addon.xml: provides = video)[/LIGHT][/COLOR]' % TEXT_DIM, 'Weather Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'Built-in Repository Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'Built-in Skin Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM]
+	type_menu = ['< < <  [COLOR %s][LIGHT]back to menu[/LIGHT][/COLOR]' % TEXT_DIM, 'Exception [COLOR %s][LIGHT] (addon.xml: provides is non standard)[/LIGHT][/COLOR]' % TEXT_DIM, 'Game Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'InputStream Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'Metadata [COLOR %s][LIGHT] (Information Providers folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'Music Add-ons [COLOR %s][LIGHT] (addon.xml: provides = audio)[/LIGHT][/COLOR]' % TEXT_DIM, 'Other Add-ons [COLOR %s][LIGHT] (other folder name starts)[/LIGHT][/COLOR]' % TEXT_DIM, 'Others Add-ons [COLOR %s][LIGHT] (addon.xml: provides not set)[/LIGHT][/COLOR]' % TEXT_DIM, 'Picture Add-ons [COLOR %s][LIGHT] (addon.xml: provides = image)[/LIGHT][/COLOR]' % TEXT_DIM, 'Program Add-ons [COLOR %s][LIGHT] (addon.xml: provides = executable)[/LIGHT][/COLOR]' % TEXT_DIM, 'Repository Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'Resource Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'Service Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'Skin Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'Video Add-ons [COLOR %s][LIGHT] (addon.xml: provides = video)[/LIGHT][/COLOR]' % TEXT_DIM, 'Weather Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'Built-in Repository Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM, 'Built-in Skin Add-ons [COLOR %s][LIGHT] (folder name starts with)[/LIGHT][/COLOR]' % TEXT_DIM]
 
-	database_menu = ['< < <  [COLOR %s][LIGHT]back to Footer Menu[/LIGHT][/COLOR]' % TEXT_DIM, '[COLOR %s]Clean Addons Database: [/COLOR]%s' % (TEXT_DARK, Addons_Db()), '[COLOR %s]Clean Databases (folder): [/COLOR]addon_data' % TEXT_DARK, '[COLOR %s]Clean Databases (folder): [/COLOR]addons' % TEXT_DARK, '[COLOR %s]Clean Databases (folder): [/COLOR]database' % TEXT_DARK, '[COLOR %s]Clean Databases (folder): [/COLOR]home [COLOR %s](all databases)[/COLOR]' % (TEXT_DARK, TEXT_DARK), '[COLOR %s]Clean Databases (folder): [/COLOR]userdata [COLOR %s](all excluding addons)[/COLOR]' % (TEXT_DARK, TEXT_DARK), 'Database Files [COLOR %s][LIGHT] (.db file list)[/LIGHT][/COLOR]' % TEXT_DIM, 'Database Tables [COLOR %s][LIGHT] (%s raw tables for analysis)[/LIGHT][/COLOR]' % (TEXT_DIM, Addons_Db()), '[COLOR %s]Database Toolbox: [/COLOR]User Information' % TEXT_DARK]
+	database_menu = ['< < <  [COLOR %s][LIGHT]back to menu[/LIGHT][/COLOR]' % TEXT_DIM, '[COLOR %s]%s:[/COLOR] Clean Addons Database' % (TEXT_DARK, Addons_Db()), '[COLOR %s]%s:[/COLOR] View Raw Tables [COLOR %s][LIGHT] (for analysis)[/LIGHT][/COLOR]' % (TEXT_DARK, Addons_Db(), TEXT_DIM), '[COLOR %s]Addon data:[/COLOR] Clean Database [LIGHT]//userdata/addon_data/[/LIGHT]' % TEXT_DARK, '[COLOR %s]Addon data:[/COLOR] Delete Database [LIGHT]//userdata/addon_data/[/LIGHT]' % TEXT_DARK, '[COLOR %s]Database:[/COLOR] Clean Database [LIGHT]//database/[/LIGHT]' % TEXT_DARK, '[COLOR %s]Userdata:[/COLOR] Clean Database [LIGHT]//userdata/[/LIGHT]' % TEXT_DARK, 'Database Files [COLOR %s][LIGHT] (.db file list)[/LIGHT][/COLOR]' % TEXT_DIM, '[COLOR %s]Database Toolbox: [/COLOR]User Information' % TEXT_DARK]
 
-	table_menu = ['< < <  [COLOR %s][LIGHT]back to Footer Menu[/LIGHT][/COLOR]' % TEXT_DIM, 'addonlinkrepo [COLOR %s][LIGHT] (sort idRepo asc > idAddon asc)[/LIGHT][/COLOR]' % TEXT_DIM, 'addons [COLOR %s][LIGHT] (only 3 columns sort addonID asc > id asc)[/LIGHT][/COLOR]' % TEXT_DIM, 'installed [COLOR %s][LIGHT] (sort addonID asc)[/LIGHT][/COLOR]' % TEXT_DIM, 'package [COLOR %s][LIGHT] (sort addonID asc > filename desc)[/LIGHT][/COLOR]' % TEXT_DIM, 'repo [COLOR %s][LIGHT] (sort addonID asc)[/LIGHT][/COLOR]' % TEXT_DIM, 'update_rules [COLOR %s][LIGHT] (sort addonID asc)[/LIGHT][/COLOR]' % TEXT_DIM, 'version [COLOR %s][LIGHT] (sort idVersion asc)[/LIGHT][/COLOR]' % TEXT_DIM] 
+	table_menu = ['< < <  [COLOR %s][LIGHT]back to menu[/LIGHT][/COLOR]' % TEXT_DIM, 'addonlinkrepo [COLOR %s][LIGHT] (sort idRepo asc > idAddon asc)[/LIGHT][/COLOR]' % TEXT_DIM, 'addons [COLOR %s][LIGHT] (only 3 columns sort addonID asc > id asc)[/LIGHT][/COLOR]' % TEXT_DIM, 'installed [COLOR %s][LIGHT] (sort addonID asc)[/LIGHT][/COLOR]' % TEXT_DIM, 'package [COLOR %s][LIGHT] (sort addonID asc > filename desc)[/LIGHT][/COLOR]' % TEXT_DIM, 'repo [COLOR %s][LIGHT] (sort addonID asc)[/LIGHT][/COLOR]' % TEXT_DIM, 'update_rules [COLOR %s][LIGHT] (sort addonID asc)[/LIGHT][/COLOR]' % TEXT_DIM, 'version [COLOR %s][LIGHT] (sort idVersion asc)[/LIGHT][/COLOR]' % TEXT_DIM] 
 
 	footer = DialogueSelect(footer_menu)
 	if footer == 0: ADDON.openSettings()
 	elif footer == 1: # Add-on Checks + Repository (Addons#.db database)
 		addons = DialogueSelect(addons_menu)
-		if addons == 0: The_Footer_Menu() # < < <  back to Footer Menu
+		if addons == 0: The_Footer_Menu() # < < <  back to menu
 		elif addons == 1: Addons_Disabled()
 		elif addons == 2: Addons_Disabled_Updates()
 		elif addons == 3: Addons_Installed('origin')
@@ -638,13 +708,13 @@ def The_Footer_Menu():
 		elif addons == 7: Addons_Packages()
 		elif addons == 8: # Add-ons Repository (excludes script.module.* add-ons)
 			sort = DialogueSelect(sort_menu)
-			if sort == 0: The_Footer_Menu() # < < <  back to Footer Menu
+			if sort == 0: The_Footer_Menu() # < < <  back to menu
 			elif sort == 1: Addons_Repository('add-on')
 			elif sort == 2: Addons_Repository('repository')
 		elif addons == 9: Addons_Repositories('no add-on repositories')
 	elif footer == 2: # Add-on Folders + .db Files (names / paths + sizes)
 		size = DialogueSelect(size_menu)
-		if size == 0: The_Footer_Menu() # < < <  back to Footer Menu
+		if size == 0: The_Footer_Menu() # < < <  back to menu
 		elif size == 1: Addon_Folders(ADDON_DATA, 'Add-on Data Folders')
 		elif size == 2: Addon_Folders(ADDONS, 'Add-on Folders')
 		elif size == 3: Addon_Folders(XBMCBINADDONS, 'Built-in Add-on Folders')
@@ -656,7 +726,7 @@ def The_Footer_Menu():
 		elif size == 9: Addon_Files('icon')
 	elif footer == 3: # Add-on Information Check (Tab: System + Add-on)
 		type = DialogueSelect(type_menu)
-		if type == 0: The_Footer_Menu() # < < <  back to Footer Menu
+		if type == 0: The_Footer_Menu() # < < <  back to menu
 		elif type == 1: Addon_Type(exception, 'Exception Add-ons')
 		elif type == 2: Addon_Type(game, 'Game Add-ons')
 		elif type == 3: Addon_Type(inputstream, 'InputStream Add-ons')
@@ -679,17 +749,11 @@ def The_Footer_Menu():
 	elif footer == 6: Database_User_Information()
 	elif footer == 7: # Database Toolbox (clean .db files)
 		database = DialogueSelect(database_menu)
-		if database == 0: The_Footer_Menu() # < < <  back to Footer Menu
+		if database == 0: The_Footer_Menu() # < < <  back to menu
 		elif database == 1: Clean_Addons_Database()
-		elif database == 2: Clean_Databases(ADDON_DATA)
-		elif database == 3: Clean_Databases(ADDONS)
-		elif database == 4: Clean_Databases(DATABASE)
-		elif database == 5: Clean_Databases(HOME)
-		elif database == 6: Clean_Databases(USERDATA)
-		elif database == 7: Addon_Files('database')
-		elif database == 8: # Addons#.db Tables
+		elif database == 2: # Addons#.db Tables
 			table = DialogueSelect(table_menu)
-			if table == 0: The_Footer_Menu() # < < <  back to Footer Menu
+			if table == 0: The_Footer_Menu() # < < <  back to menu
 			elif table == 1: Addons_Tables('addonlinkrepo')
 			elif table == 2: Addons_Tables('addons')
 			elif table == 3: Addons_Tables('installed')
@@ -697,6 +761,11 @@ def The_Footer_Menu():
 			elif table == 5: Addons_Tables('repo')
 			elif table == 6: Addons_Tables('update_rules')
 			elif table == 7: Addons_Tables('version')
-		elif database == 9: Database_User_Information()
+		elif database == 3: Select_Database(ADDON_DATA, 'clean_database')
+		elif database == 4: Select_Database(ADDON_DATA, 'delete_database')
+		elif database == 5: Select_Database(DATABASE, 'clean_database')
+		elif database == 6: Select_Database(USERDATA, 'clean_database')
+		elif database == 7: Addon_Files('database')
+		elif database == 8: Database_User_Information()
 	elif footer == 8: Favourites_User_Information()
 	elif footer == 9: Reorder_Favourites()
