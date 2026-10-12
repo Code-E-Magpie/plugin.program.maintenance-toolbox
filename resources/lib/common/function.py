@@ -27,6 +27,7 @@ import xbmc, xbmcgui, xbmcvfs
 import glob, os, re
 
 from datetime import date, datetime, timedelta
+from pathlib import Path
 
 from resources.lib.common.configuration import configuration
 
@@ -40,7 +41,6 @@ ADDON_NAME = configuration.ADDON_NAME
 DATABASE = configuration.DATABASE
 NOTIFICATION_DURATION = ADDON.getSetting('notification_duration')
 TEXT_ADDON = configuration.TEXT_ADDON
-TEXT_DARK = configuration.TEXT_DARK
 TEXT_GENERAL = configuration.TEXT_GENERAL
 TEXT_HIGHLIGHT = configuration.TEXT_HIGHLIGHT
 TEXT_ITEM = configuration.TEXT_ITEM
@@ -89,15 +89,15 @@ def Add_Blank():
 def Addons_Db():
 	
 	pattern = re.compile(r'Addons(\d+)\.db$', re.IGNORECASE)
-	matches = glob.glob(os.path.join(DATABASE, 'Addons*.db'))
+	database_matches = glob.glob(os.path.join(DATABASE, 'Addons*.db'))
 	highest = 0
 
-	for file in matches:
-		basename = os.path.basename(file)
-		file_match = pattern.search(basename)
-		if file_match:
+	for database in database_matches:
+		basename = os.path.basename(database)
+		database_match = pattern.search(basename)
+		if database_match:
 			try:
-				number = int(file_match.group(1))
+				number = int(database_match.group(1))
 			except ValueError:
 				continue
 			if number > highest:
@@ -128,11 +128,11 @@ def Count_Favourites(file_path):
 		return 0
 
 	except IOError:
-		Log(Log_Title + Function + 'Count Favourites: error reading file', xbmc.LOGERROR)
+		Log(Log_Title + Function + 'Count Favourites: read error %s' % file_path, xbmc.LOGERROR)
 		return '[COLOR %s][LIGHT]File Error[/LIGHT][/COLOR]' % TEXT_HIGHLIGHT
 
 	except re.error as e:
-		Log(Log_Title + Function + 'Count Favourites: file content error[CR]%s' % str(e), xbmc.LOGERROR)
+		Log(Log_Title + Function + 'Count Favourites: content error %s' % str(e), xbmc.LOGERROR)
 		return '[COLOR %s][LIGHT]Exception[/LIGHT][/COLOR]' % TEXT_HIGHLIGHT
 
 # ============================================================
@@ -144,16 +144,11 @@ def Count_Favourites(file_path):
 
 def Count_File(file_path):
 
-	try:
-		if os.path.isfile(file_path):
-			return 1
+	if os.path.isfile(file_path):
+		return 1
 
-		else:
-			return 0
-
-	except (OSError, IOError):
-		Log(Log_Title + Function + 'Count File: error reading file', xbmc.LOGERROR)
-		return '[COLOR %s][LIGHT]File Error[/LIGHT][/COLOR]' % TEXT_HIGHLIGHT
+	else:
+		return 0
 
 # ============================================================
 # FUNCTION: Count_Files
@@ -187,10 +182,13 @@ def Count_Folders(folder_path):
 	if not os.path.exists(folder_path):
 		return 0
 
-	else:
+	try:
 		count_folders = len([folders for folders in xbmcvfs.listdir(folder_path)[0]])
 
-		return count_folders
+	except Exception:
+		return 0
+
+	return count_folders
 
 # ============================================================
 # FUNCTION: Count_Lines
@@ -213,15 +211,15 @@ def Count_Lines(file_path):
 		return 0
 
 	except IOError:
-		Log(Log_Title + Function + 'Count Lines: error reading file', xbmc.LOGERROR)
+		Log(Log_Title + Function + 'Count Lines: read error %s' % file_path, xbmc.LOGERROR)
 		return '[COLOR %s][LIGHT]File Error[/LIGHT][/COLOR]' % TEXT_HIGHLIGHT
 
 	except Exception as e:
-		Log(Log_Title + Function + 'Count Lines: file content error[CR]%s' % str(e), xbmc.LOGERROR)
+		Log(Log_Title + Function + 'Count Lines: content error %s' % str(e), xbmc.LOGERROR)
 		return '[COLOR %s][LIGHT]Exception[/LIGHT][/COLOR]' % TEXT_HIGHLIGHT
 
 	except UnicodeDecodeError:
-		Log(Log_Title + Function + 'Count Lines: file contains non-ASCII characters', xbmc.LOGERROR)
+		Log(Log_Title + Function + 'Count Lines: file contains non-ASCII characters %s' % file_path, xbmc.LOGERROR)
 		return '[COLOR %s][LIGHT]Non-ASCII[/LIGHT][/COLOR]' % TEXT_HIGHLIGHT
 
 # ============================================================
@@ -247,7 +245,7 @@ def Count_Log_Errors(file_path):
 		return 0
 
 	except IOError:
-		Log(Log_Title + Function + 'Count Log Errors: error reading file', xbmc.LOGERROR)
+		Log(Log_Title + Function + 'Count Log Errors: read error %s' % file_path, xbmc.LOGERROR)
 		return '[COLOR %s][LIGHT]File Error[/LIGHT][/COLOR]' % TEXT_HIGHLIGHT
 
 	except re.error as e:
@@ -269,21 +267,10 @@ def Count_Log_Errors(file_path):
 def Count_Log_Files(folder_path):
 
 	try:
-		files = os.listdir(folder_path)
+		return sum(1 for _ in Path(folder_path).iterdir() if _.is_file() and _.suffix == ".log")
 
-	except OSError:
+	except (OSError, PermissionError):
 		return 0
-
-	count_log_files = 0
-
-	for file in files:
-		file_path = os.path.join(folder_path, file)
-		if os.path.isfile(file_path):
-			if file.endswith('.log'):
-
-				count_log_files += 1
-
-	return count_log_files
 
 # ============================================================
 # FUNCTION: Count_Log_Lines
@@ -339,11 +326,11 @@ def Count_Sources(file_path):
 		return 0
 
 	except IOError:
-		Log(Log_Title + Function + 'Count Sources: error reading file', xbmc.LOGERROR)
+		Log(Log_Title + Function + 'Count Sources: read error %s' % file_path, xbmc.LOGERROR)
 		return '[COLOR %s][LIGHT]File Error[/LIGHT][/COLOR]' % TEXT_HIGHLIGHT
 
 	except re.error as e:
-		Log(Log_Title + Function + 'Count Sources: file content error[CR]%s' % str(e), xbmc.LOGERROR)
+		Log(Log_Title + Function + 'Count Sources: content error %s' % str(e), xbmc.LOGERROR)
 		return '[COLOR %s][LIGHT]Exception[/LIGHT][/COLOR]' % TEXT_HIGHLIGHT
 
 # ============================================================
@@ -378,7 +365,6 @@ def List_Files(folder_path, output):
 	except IOError as e:
 		Log(Log_Title + Function + 'List Files: %s' % str(e), xbmc.LOGERROR)
 
-	Log(Log_Title + Function + '[COLOR %s][LIGHT]List Files: %s[/LIGHT][/COLOR]' % (TEXT_DARK, folder_path), xbmc.LOGINFO)
 	Log(Log_Title + Function + 'List: %s' % output, xbmc.LOGINFO)
 
 # ============================================================
@@ -411,7 +397,6 @@ def List_Folders(folder_path, output):
 	except IOError as e:
 		Log(Log_Title + Function + 'List Folders: %s' % str(e), xbmc.LOGERROR)
 
-	Log(Log_Title + Function + '[COLOR %s][LIGHT]List Folders: %s[/LIGHT][/COLOR]' % (TEXT_DARK, folder_path), xbmc.LOGINFO)
 	Log(Log_Title + Function + 'List: %s' % output, xbmc.LOGINFO)
 
 # ============================================================
@@ -446,7 +431,6 @@ def List_Logs(folder_path, output):
 	except IOError as e:
 		Log(Log_Title + Function + 'List Logs: %s' % str(e), xbmc.LOGERROR)
 
-	Log(Log_Title + Function + '[COLOR %s][LIGHT]List Logs: %s[/LIGHT][/COLOR]' % (TEXT_DARK, folder_path), xbmc.LOGINFO)
 	Log(Log_Title + Function + 'List: %s' % output, xbmc.LOGINFO)
 
 # ============================================================
@@ -535,22 +519,6 @@ def Now():
 	return now.strftime("%Y-%m-%d %H:%M:%S")
 
 # ============================================================
-# FUNCTION: Now_Decimal
-# ============================================================
-
-# used by:
-# service.py
-# tab1.clear_cache.py
-# tab1.clear_surplus.py
-# tab1.clear_temp.py
-# tab1.clear_thumbnails.py
-
-def Now_Decimal():
-
-	now = datetime.now()
-	return now.strftime("%Y-%m-%d %H:%M:%S.%f")[:22] # 2nd digit is number of decimal places
-
-# ============================================================
 # FUNCTION: Size_Convert
 # ============================================================
 
@@ -570,32 +538,9 @@ def Size_Convert(num, suffix = 'B'):
 	for unit in ['', 'K', 'M', 'G']:
 		if abs(num) < 1024.0:
 			return "%3.02f %s%s" % (num, unit, suffix)
+
 		num /= 1024.0
 	return "%.02f %s%s" % (num, 'G', suffix)
-
-# ============================================================
-# FUNCTION: Size_File
-# ============================================================
-
-# used by:
-# interface.py
-
-def Size_File(file_path):
-
-	size_file = 0
-
-	try:
-		if os.path.exists(file_path):
-			size_file += os.path.getsize(file_path)
-
-		else:
-			return 0
-
-	except (OSError, IOError) as e:
-		Log(Log_Title + Function + 'Size File: error reading file[CR]%s' % str(e), xbmc.LOGERROR)
-		return '[COLOR %s][LIGHT]File Error[/LIGHT][/COLOR]' % TEXT_HIGHLIGHT
-
-	return size_file
 
 # ============================================================
 # FUNCTION: Size_Log_Files (excludes subfolders)
@@ -603,27 +548,19 @@ def Size_File(file_path):
 
 # used by:
 # interface.py
-# tab1.clear_temp.py
 
 def Size_Log_Files(folder_path):
 
 	try:
-		files = os.listdir(folder_path)
+		return sum(file.stat().st_size for file in Path(folder_path).iterdir() if file.is_file() and file.suffix == '.log')
 
-	except OSError as e:
-		Log(Log_Title + Function + 'Size Log Files: error reading folder[CR]%s' % str(e), xbmc.LOGERROR)
-		return '[COLOR %s][LIGHT]Folder Error[/LIGHT][/COLOR]' % TEXT_HIGHLIGHT
+	except FileNotFoundError:
+		Log(Log_Title + Function + 'Size Log Files: folder not found', xbmc.LOGERROR)
+		return 0
 
-	size_log_files = 0
-
-	for file in files:
-		file_path = os.path.join(folder_path, file)
-		if os.path.isfile(file_path):
-			if file.endswith('.log'):
-				file_size = os.path.getsize(file_path)
-				size_log_files += file_size
-
-	return size_log_files
+	except PermissionError as e:
+		Log(Log_Title + Function + 'Size Log Files: error %s' % str(e), xbmc.LOGERROR)
+		return 0
 
 # ============================================================
 # FUNCTION: Size_Total
