@@ -7,9 +7,8 @@
 # sourced from: new development
 # location: plugin.program.maintenance-toolbox > resources > lib > tab3 > profiles_xml.py
 # type: backup and restore
-# functionality: profiles backup and restore of special://userdata/profiles.xml
+# functionality: profiles backup and restore of //userdata/profiles.xml
 # development:
-#	- last save date captured using ADDON.setSetting and visible in Settings
 #	- functions consolidated to plugin.program.maintenance-toolbox > resources > lib > common > function.py
 #	- variables consolidated to plugin.program.maintenance-toolbox > resources > lib > common > configuration.py
 #	- code debugged and reengineered if required using https://aipy.dev/tools
