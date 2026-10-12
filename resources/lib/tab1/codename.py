@@ -9,9 +9,6 @@
 # type: data source
 # functionality: codename derived from Kodi build version code
 # development:
-#	- file content formatted
-#	- some functions and variables renamed
-#	- new configuration including error handling
 #	- user interface indicates when codename.py file needs updating i.e. when new version of Kodi is not in list
 #		see https://kodi.wiki/view/Codename_history
 #	- functions consolidated to plugin.program.maintenance-toolbox > resources > lib > common > function.py
