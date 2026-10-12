@@ -7,9 +7,8 @@
 # sourced from: new development
 # location: plugin.program.maintenance-toolbox > resources > lib > tab4 > addon_data.py
 # type: backup and restore
-# functionality: addon_data backup and delete backup of special://userdata/addon_data + list addon_data in text file
+# functionality: addon_data backup and delete backup of //userdata/addon_data + list addon_data in text file
 # development:
-#	- last save date captured using ADDON.setSetting and visible in Settings
 #	- functions consolidated to plugin.program.maintenance-toolbox > resources > lib > common > function.py
 #	- variables consolidated to plugin.program.maintenance-toolbox > resources > lib > common > configuration.py
 #	- code debugged and reengineered if required using https://aipy.dev/tools

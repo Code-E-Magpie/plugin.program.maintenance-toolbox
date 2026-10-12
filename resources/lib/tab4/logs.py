@@ -7,9 +7,8 @@
 # sourced from: new development
 # location: plugin.program.maintenance-toolbox > resources > lib > tab4 > logs.py
 # type: log
-# functionality: new system log and old system log backup and delete backup of special://logpath + list logs in text file
+# functionality: new system log and old system log backup and delete backup of //logpath + list logs in text file
 # development:
-#	- last save date captured using ADDON.setSetting and visible in Settings
 #	- functions consolidated to plugin.program.maintenance-toolbox > resources > lib > common > function.py
 #	- variables consolidated to plugin.program.maintenance-toolbox > resources > lib > common > configuration.py
 #	- code debugged and reengineered if required using https://aipy.dev/tools
@@ -30,7 +29,7 @@ import os, shutil
 from datetime import date, datetime, timedelta
 
 from resources.lib.common.configuration import configuration
-from resources.lib.common.function import Addon_Title, Dialogue, List_Logs, Log, Log_Title, Notification, Now
+from resources.lib.common.function import Addon_Title, Count_Log_Files, Dialogue, List_Logs, Log, Log_Title, Notification, Now
 
 # ============================================================
 # Variables
@@ -70,11 +69,16 @@ def Logs_Backup():
 					destination_file = os.path.join(LOGS_FOLDER, item)
 					shutil.copy(source_file, destination_file)
 
-					ADDON.setSetting('logs_backup_save', Now())
-					List_Logs(LOGPATH, LOGS_LIST)
+			if Count_Log_Files(LOGPATH) > 0:
+				ADDON.setSetting('logs_backup_save', Now())
+				List_Logs(LOGPATH, LOGS_LIST)
 
-					Notification(Addon_Title, '[COLOR %s]Backup Logs: backup saved[/COLOR]' % TEXT_GENERAL)
-					Log(Log_Title + Logs + 'Backup Logs: backup saved', xbmc.LOGINFO)
+				Notification(Addon_Title, '[COLOR %s]Backup Logs: backup saved[/COLOR]' % TEXT_GENERAL)
+				Log(Log_Title + Logs + 'Backup Logs: backup saved', xbmc.LOGINFO)
+
+			else:
+				Notification(Addon_Title, '[COLOR %s]Backup Logs: none found[/COLOR]' % TEXT_GENERAL)
+				Log(Log_Title + Logs + 'Backup Logs: none found', xbmc.LOGINFO)
 
 	else:
 			Dialogue.ok(Addon_Title, '[COLOR %s]Backup Logs: [LIGHT](MT_logs)[CR][COLOR %s]Run Delete Backup Logs or[CR]move / rename backup folder to keep it and try again.[/LIGHT][/COLOR][CR]Backup already exists.[/COLOR]' % (TEXT_GENERAL, TEXT_ITEM))

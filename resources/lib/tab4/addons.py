@@ -7,9 +7,8 @@
 # sourced from: new development
 # location: plugin.program.maintenance-toolbox > resources > lib > tab4 > addons.py
 # type: backup
-# functionality: add-ons backup and delete backup of special://home/addons + list add-ons and built-in add-ons special://xbmcbinaddons/ in text file
+# functionality: add-ons backup and delete backup of //home/addons + list add-ons and built-in add-ons //xbmcbinaddons/ in text file
 # development:
-#	- last save date captured using ADDON.setSetting and visible in Settings
 #	- functions consolidated to plugin.program.maintenance-toolbox > resources > lib > common > function.py
 #	- variables consolidated to plugin.program.maintenance-toolbox > resources > lib > common > configuration.py
 #	- code debugged and reengineered if required using https://aipy.dev/tools
@@ -30,7 +29,7 @@ import os, shutil
 from datetime import date, datetime, timedelta
 
 from resources.lib.common.configuration import configuration
-from resources.lib.common.function import Addon_Title, Dialogue, List_Folders, Log, Log_Title, Notification
+from resources.lib.common.function import Addon_Title, Dialogue, List_Folders, Log, Log_Title, Notification, Now
 
 # ============================================================
 # Variables
